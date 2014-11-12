@@ -5,81 +5,214 @@
 </head>
 <body ng-app="CrowdFundingApp">
 
-<div>
+<div ng-if="stap1">
+    <form class="form-horizontal">
+        <fieldset>
+            <!--
+                Login / registratie
+            -->
+            <legend>Geld lenen inloggen/registreren</legend>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">User</label>
+                <div class="col-lg-10">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="username or email">
+                </div>
+
+                <label class="col-lg-2 control-label">Wachtwoord</label>
+                <div class="col-lg-10">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" class="btn btn-primary" ng-click="geldlenen_stap2()">Volgende</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div ng-if="stap2">
 <form class="form-horizontal">
     <fieldset>
-        <legend>Legend</legend>
-        <p>{{currentTime | date: 'h:mm:ss a'}}</p>
+        <!--
+            Lenen stap2 / kredietbedrag
+        -->
+        <legend>Geld lenen / kredietbedrag</legend>
+        <span class="label label-primary" style="font-size: 100%">Kredietbedrag</span>
+
         <div class="form-group">
-            <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="inputEmail" placeholder="Email">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-            <div class="col-lg-10">
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> Checkbox
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="textArea" class="col-lg-2 control-label">Textarea</label>
-            <div class="col-lg-10">
-                <textarea class="form-control" rows="3" id="textArea"></textarea>
-                <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Radios</label>
-            <div class="col-lg-10">
+            <br/>
+            <label class="col-lg-3">Categorie</label>
+            <div class="col-lg-9">
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                        Option one is this
+                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="" ng-model="checked">
+                        Particulier
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                        Option two can be something else
+                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" ng-model="checked">
+                        Zakelijk
                     </label>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label for="select" class="col-lg-2 control-label">Selects</label>
-            <div class="col-lg-10">
-                <select class="form-control" id="select">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-                <br>
-                <select multiple="" class="form-control">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
+            <label for="inputKrediet" class="col-lg-3">Kredietbedrag</label>
+            <div class="col-lg-9">
+                <input type="number" min="0" max="1000000" step="500" id="inputKrediet" name="krediet" ng-model="fee.krediet"/>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-2">
-                <button class="btn btn-default">Cancel</button>
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <label for="inputLooptijd" class="col-lg-3">Looptijd (in maanden)</label>
+            <div class="col-lg-9">
+                <input type="number" min="0" max="60" step="6" id="inputLooptijd" name="looptijd" ng-change="berekenFee()" ng-model="fee.looptijd" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label name="inputRente" class="col-lg-3">Rentepercentage per jaar(%)</label>
+            <div class="col-lg-9">
+                <input type="number" min="0" max="60" step="6" id="inputRente" name="rente" ng-model="fee.rente"/>
+            </div>
+        </div>
+        <!--
+            Behadelingskosten
+        -->
+        <hr>
+        <span class="label label-primary" style="font-size: 100%">Behandelingskosten</span>
+        <br/><br/>
+        <div class="form-group">
+            <label class="col-lg-3">Eenmalige succes fee</label>
+            <div class="col-lg-9">
+                &euro;&nbsp;{{fee.berekend}}
+                <span class="help-block">De eenmalige succes fee wordt berekend over uw kredietbedrag en is opgebouwd uit een basistarief van 1,25%.
+Let op: de eenmalige succes fee wordt in mindering gebracht op het uit te keren kredietbedrag.</span>
+            </div>
+        </div>
+        <!--
+            Aflossing
+        -->
+        <hr>
+        <span class="label label-primary" style="font-size: 100%">Aflossing</span>
+        <br/><br/>
+        <div class="form-group">
+            <label class="col-lg-3">Kredietbedrag</label>
+            <div class="col-lg-9">
+                &euro;&nbsp;{{fee.krediet}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3">Looptijd</label>
+            <div class="col-lg-9">
+                {{fee.looptijd}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3">Rentepercentage</label>
+            <div class="col-lg-9">
+                {{fee.rente}}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-9 col-lg-offset-3">
+                <button type="submit" class="btn btn-primary" ng-click="geldlenen_stap1()">Vorige</button>
+                <button type="submit" class="btn btn-primary" ng-click="geldlenen_stap3()">Volgende</button>
             </div>
         </div>
     </fieldset>
 </form>
 </div>
+<div ng-if="stap3">
+    <form class="form-horizontal">
+        <fieldset>
+            <!--
+                Lenen stap3
+            -->
+            <legend>Geld lenen / Kontroleren </legend>
+            <span class="label label-primary" style="font-size: 100%">Bevestiging</span>
+            <br/><br/>
+            <div class="form-group">
+                <label class="col-lg-3">Naam klant</label>
+                <div class="col-lg-9">
+                    {{naam_klant}}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3">Rekeningnummer</label>
+                <div class="col-lg-9">
+                    {{iban_klant}}
+                </div>
+            </div>
+            <span class="label label-primary" style="font-size: 100%">Behandelingskosten</span>
+            <br/><br/>
+            <div class="form-group">
+                <label for="inputKrediet" class="col-lg-3">Kredietbedrag</label>
+                <div class="col-lg-9">
+                    &euro;&nbsp;{{fee.krediet}}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputLooptijd" class="col-lg-3">Looptijd (in maanden)</label>
+                <div class="col-lg-9">
+                    {{fee.looptijd}}
+                </div>
+            </div>
+            <div class="form-group">
+                <label name="inputRente" class="col-lg-3">Rentepercentage per jaar(%)</label>
+                <div class="col-lg-9">
+                    {{fee.rente}}
+                </div>
+            </div>
+            <!--
+                Behadelingskosten
+            -->
+            <hr>
+            <span class="label label-primary" style="font-size: 100%">Behandelingskosten</span>
+            <br/><br/>
+            <div class="form-group">
+                <label class="col-lg-3">Eenmalige succes fee</label>
+                <div class="col-lg-9">
+                    &euro;&nbsp;{{fee.berekend}}
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Ik ga akkoord met de algemene voorwaarden
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
 
+            </div>
+            <div class="form-group">
+                <div class="col-lg-9 col-lg-offset-3">
+                    <button type="submit" class="btn btn-primary" ng-click="geldlenen_stap2()">Vorige</button>
+                    <button type="submit" class="btn btn-primary" ng-click="geldlenen_stap4()">Volgende</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div ng-if="stap4">
+    <form class="form-horizontal">
+        <fieldset>
+            <!--
+                Lenen stap3
+            -->
+            <legend>Geld lenen / Bevestiging </legend>
+            <span class="label label-primary" style="font-size: 100%">Bevestiging</span>
+            <br/><br/>
+            <div class="form-group">
+                <label class="col-lg-2"></label>
+                <div class="col-lg-10">
+                    <span>Dank voor uw aanvraag, binnen 2 werkdagen zal deze gekontroleerd worden.</span>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
 </body>
 </html>

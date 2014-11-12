@@ -6,6 +6,7 @@
 angular.module('CrowdFundingApp')
     .controller('ProjectenCtrl', function ($scope, state) {
         state.active('home');
+
         $scope.test = "test";
 
         $scope.projects = [

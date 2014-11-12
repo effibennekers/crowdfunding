@@ -5,9 +5,9 @@ angular.module('CrowdFundingApp').controller('LoginCtrl', function ($scope, $mod
     $scope.items = ['item1', 'item2', 'item3'];
 
     $scope.open = function (size) {
-
+        console.log(size);
         var modalInstance = $modal.open({
-            templateUrl: 'views/login.html',
+            templateUrl: 'login.html',
             controller: 'LoginInstanceCtrl',
             size: size,
             resolve: {
@@ -36,8 +36,8 @@ angular.module('CrowdFundingApp').controller('LoginInstanceCtrl', function ($sco
         $modalInstance.close($scope.selected.item);
     };
 
-    /*$scope.cancel = function () {
+    $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
-    };*/
+    };
 });
 
