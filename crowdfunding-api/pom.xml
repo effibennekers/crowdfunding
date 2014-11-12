@@ -59,8 +59,8 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-		</dependency>
-</dependencies>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -72,12 +72,17 @@
                     <webResources>
                         <resource>
                             <directory>../crowdfunding-web/app</directory>
-                            <!--targetPath>WEB-INF</targetPath-->
+                        </resource>
+                        <resource>
+                            <directory>../crowdfunding-web/bower_components</directory>
+                            <targetPath>bower_components</targetPath>
                         </resource>
                     </webResources>
                 </configuration>
             </plugin>
         </plugins>
+
+
     </build>
 
 </project>
