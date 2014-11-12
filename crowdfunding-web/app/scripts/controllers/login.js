@@ -36,8 +36,8 @@ angular.module('CrowdFundingApp').controller('LoginInstanceCtrl', function ($sco
         $modalInstance.close($scope.selected.item);
     };
 
-    /*$scope.cancel = function () {
+    $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
-    };*/
+    };
 });
 
