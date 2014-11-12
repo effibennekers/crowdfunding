@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Geld Lenen</title>
+</head>
+<body ng-app="CrowdFundingApp">
+
+<div>
+<form class="form-horizontal">
+    <fieldset>
+        <legend>Geld lenen stap1</legend>
+        <span class="label label-primary">Kredietbedrag</span>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Categorie</label>
+            <div class="col-lg-10">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                        Particulier
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                        Zakelijk
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputKrediet" class="col-lg-2 control-label">Kredietbedrag</label>
+            <div class="col-lg-10">
+                 <input type="number" min="0" max="1000000" step="500" id="inputKrediet" name="krediet" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputLooptijd" class="col-lg-2 control-label">Looptijd (in maanden)</label>
+            <div class="col-lg-10">
+                <input type="number" min="0" max="60" step="6" id="inputLooptijd" name="looptijd" ng-change="berekenFee()" ng-model="fee.calculate" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label name="inputRente" class="col-lg-2 control-label">Rentepercentage per jaar(%)</label>
+            <div class="col-lg-10">
+                <input type="number" min="0" max="60" step="6" id="inputRente" name="rente"/>
+            </div>
+        </div>
+        <span class="label label-primary">Behandelingskosten</span>
+        <br/><br/>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Eenmalige succes fee</label>
+            <div class="col-lg-10">
+                {{fee.berekend}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+            <div class="col-lg-10">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Checkbox
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="textArea" class="col-lg-2 control-label">Textarea</label>
+            <div class="col-lg-10">
+                <textarea class="form-control" rows="3" id="textArea"></textarea>
+                <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="select" class="col-lg-2 control-label">Selects</label>
+            <div class="col-lg-10">
+                <select class="form-control" id="select">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <br>
+                <select multiple="" class="form-control">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-default">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+</div>
+
+</body>
+</html>
