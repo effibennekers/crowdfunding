@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 @Repository
 public class KlantRepository {
 
-    public static final String INSERT = "insert into  crowdfunding.klant values (default, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String INSERT = "insert into  crowdfunding.klant values (default, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public Klant find(String id) {
         Klant klant = new Klant();
@@ -42,11 +42,14 @@ public class KlantRepository {
                 klant.setIngklant(resultSet.getBoolean("ingklant"));
                 klant.setPlaats(resultSet.getString("plaats"));
                 klant.setStraatnaam(resultSet.getString("straatnaam"));
-                klant.setTelefoonnummer(resultSet.getBigDecimal("telefoonnummer").toBigInteger());
-                klant.setTelefoonnummerrmobiel(resultSet.getBigDecimal("telefoonnummerrmobiel").toBigInteger());
-                klant.setTelefoonnummersms(resultSet.getBigDecimal("telefoonnummersms").toBigInteger());
+                klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
+                klant.setTelefoonnummermobiel(resultSet.getString("telefoonnummermobiel"));
+                klant.setTelefoonnummersms(resultSet.getString("telefoonnummersms"));
                 klant.setTussenvoegsels(resultSet.getString("tussenvoegsels"));
                 klant.setVoornaam(resultSet.getString("voornaam"));
+                klant.setPostcode(resultSet.getString("postcode"));
+                klant.setAuthtoken(resultSet.getString("authtoken"));
+                klant.setPassword(resultSet.getString("password"));
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -63,7 +66,7 @@ public class KlantRepository {
                         .prepareStatement(INSERT);
 
                 // klantid, voornaam, achternaam, tussenvoegsels, straatnaam, huisnummer, huisnummerav, plaats, debtoriban, creditoriban,
-                // telefoonnummer, telefoonnummersms, telefoonnummerrmobiel, geboortedag, ingklant, contract, email
+                // telefoonnummer, telefoonnummersms, telefoonnummermobiel, geboortedag, ingklant, contract, email postcode authtoken password
                 // parameters start with 1
                 preparedStatement.setString(1, klant.getVoornaam());
                 preparedStatement.setString(2, klant.getAchternaam());
@@ -74,15 +77,18 @@ public class KlantRepository {
                 preparedStatement.setString(7, klant.getPlaats());
                 preparedStatement.setString(8, klant.getDebtoriban());
                 preparedStatement.setString(9, klant.getCreditoriban());
-                preparedStatement.setBigDecimal(10, BigDecimal.valueOf(klant.getTelefoonnummer().longValue()));
-                preparedStatement.setBigDecimal(11, BigDecimal.valueOf(klant.getTelefoonnummersms().longValue()));
-                preparedStatement.setBigDecimal(12, BigDecimal.valueOf(klant.getTelefoonnummerrmobiel().longValue()));
+                preparedStatement.setString(10, klant.getTelefoonnummer());
+                preparedStatement.setString(11, klant.getTelefoonnummersms());
+                preparedStatement.setString(12, klant.getTelefoonnummermobiel());
                 preparedStatement.setDate(13, new java.sql.Date(klant.getGeboortedag().getTime()));
                 preparedStatement.setBoolean(14, klant.getIngklant());
                 preparedStatement.setString(15, klant.getContract());
                 preparedStatement.setString(16, klant.getEmail());
+                preparedStatement.setString(17, klant.getPostcode());
+                preparedStatement.setString(18, klant.getAuthtoken());
+                preparedStatement.setString(19, klant.getPassword());
                 preparedStatement.executeUpdate();
-
+                preparedStatement.close();
             } else {
                 StringBuffer buffer = new StringBuffer();
                 buffer.append("UPDATE crowdfunding.klant SET ");
@@ -97,11 +103,14 @@ public class KlantRepository {
                 buffer.append("creditoriban = ?, ");
                 buffer.append("telefoonnummer = ?, ");
                 buffer.append("telefoonnummersms = ?, ");
-                buffer.append("telefoonnummerrmobiel = ?, ");
+                buffer.append("telefoonnummermobiel = ?, ");
                 buffer.append("geboortedag = ?, ");
                 buffer.append("ingklant = ?, ");
                 buffer.append("contract = ?, ");
-                buffer.append("email = ? ");
+                buffer.append("email = ?, ");
+                buffer.append("postcode = ?, ");
+                buffer.append("authtoken = ?, ");
+                buffer.append("password = ? ");
                 buffer.append("WHERE klantid = ?");
 
                 PreparedStatement preparedStatement = (PreparedStatement) connection
@@ -116,15 +125,19 @@ public class KlantRepository {
                 preparedStatement.setString(7, klant.getPlaats());
                 preparedStatement.setString(8, klant.getDebtoriban());
                 preparedStatement.setString(9, klant.getCreditoriban());
-                preparedStatement.setBigDecimal(10, BigDecimal.valueOf(klant.getTelefoonnummer().longValue()));
-                preparedStatement.setBigDecimal(11, BigDecimal.valueOf(klant.getTelefoonnummersms().longValue()));
-                preparedStatement.setBigDecimal(12, BigDecimal.valueOf(klant.getTelefoonnummerrmobiel().longValue()));
+                preparedStatement.setString(10, klant.getTelefoonnummer());
+                preparedStatement.setString(11, klant.getTelefoonnummersms());
+                preparedStatement.setString(12, klant.getTelefoonnummermobiel());
                 preparedStatement.setDate(13, new java.sql.Date(klant.getGeboortedag().getTime()));
                 preparedStatement.setBoolean(14, klant.getIngklant());
                 preparedStatement.setString(15, klant.getContract());
                 preparedStatement.setString(16, klant.getEmail());
-                preparedStatement.setInt(16, klant.getKlantid());
+                preparedStatement.setInt(17, klant.getKlantid());
+                preparedStatement.setString(18, klant.getPostcode());
+                preparedStatement.setString(19, klant.getAuthtoken());
+                preparedStatement.setString(20, klant.getPassword());
                 preparedStatement.executeUpdate();
+                preparedStatement.close();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -139,6 +152,7 @@ public class KlantRepository {
                     .prepareStatement("delete from crowdfunding.klant where klantid= ? ; ");
             preparedStatement.setString(1, id);
             preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
