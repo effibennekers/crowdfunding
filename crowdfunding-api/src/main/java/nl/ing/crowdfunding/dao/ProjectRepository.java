@@ -52,7 +52,7 @@ public class ProjectRepository {
 			if (project.getProjectid() == 0) {
 				// insert
 				PreparedStatement preparedStatement = (PreparedStatement) connection
-						.prepareStatement("insert into crowdfunding.project values (default,?,?,?,?,?,?,?,?,?");
+						.prepareStatement("insert into crowdfunding.project values (default,?,?,?,?,?,?,?,?,?)");
 				preparedStatement.setString(1, project.getTitel());
 				preparedStatement.setDate(2, new java.sql.Date(project.getAangemeld().getTime()));
 				preparedStatement.setString(3, project.getBeschrijving());
