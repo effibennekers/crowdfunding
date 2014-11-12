@@ -2,11 +2,11 @@ package nl.ing.crowdfunding.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import nl.ing.crowdfunding.domain.Project;
 import nl.ing.crowdfunding.domain.ProjectStatus;
 
+import nl.ing.crowdfunding.util.ConnectionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -20,11 +20,12 @@ public class ProjectRepository {
 			Connection connection = ConnectionUtils.getConnecetion();
 
 			PreparedStatement preparedStatement = (PreparedStatement) connection
-					.prepareStatement("select from crowdfunding.project where projectid= ? ; ");
+					.prepareStatement("select * from crowdfunding.project where projectid= ? ; ");
 			preparedStatement.setString(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
+                project.setProjectid(resultSet.getInt("projectid"));
 				project.setTitel(resultSet.getString("titel"));
 				project.setAangemeld(resultSet.getDate("aangemeld"));
 				project.setBeschrijving(resultSet.getString("beschrijving"));
