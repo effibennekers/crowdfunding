@@ -1,17 +1,18 @@
 package nl.ing.crowdfunding.dao;
 
-import nl.ing.crowdfunding.domain.Aanvraag;
+import nl.ing.crowdfunding.domain.Investering;
+import nl.ing.crowdfunding.domain.Klant;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AanvraagRepository {
+public class KlantRepository {
 
-    public Aanvraag find(String id) {
+    public Klant find(String id) {
         //TODO
         return null;
     }
 
-    public void save(Aanvraag aanvraag) {
+    public void save(Klant klant) {
         //TODO
     }
 
