@@ -28,9 +28,29 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+            <label for="inputKrediet" class="col-lg-2 control-label">Kredietbedrag</label>
             <div class="col-lg-10">
-                <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                 <input type="number" min="0" max="1000000" step="500" id="inputKrediet" name="krediet" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputLooptijd" class="col-lg-2 control-label">Looptijd (in maanden)</label>
+            <div class="col-lg-10">
+                <input type="number" min="0" max="60" step="6" id="inputLooptijd" name="looptijd" ng-change="berekenFee()" ng-model="fee.calculate" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label name="inputRente" class="col-lg-2 control-label">Rentepercentage per jaar(%)</label>
+            <div class="col-lg-10">
+                <input type="number" min="0" max="60" step="6" id="inputRente" name="rente"/>
+            </div>
+        </div>
+        <span class="label label-primary">Behandelingskosten</span>
+        <br/><br/>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Eenmalige succes fee</label>
+            <div class="col-lg-10">
+                {{fee.berekend}}
             </div>
         </div>
         <div class="form-group">
