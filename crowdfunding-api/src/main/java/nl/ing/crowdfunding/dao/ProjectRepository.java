@@ -62,6 +62,7 @@ public class ProjectRepository {
 				preparedStatement.setInt(7, project.getRisicoprofiel());
 				preparedStatement.setInt(8, project.getEigenaar());
 				preparedStatement.setString(9, project.getStatus().name());
+				preparedStatement.executeUpdate();
 			} else {
 				// update existing
 				StringBuffer buff = new StringBuffer("UPDATE crowdfunding.project set ");
