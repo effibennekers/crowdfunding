@@ -28,12 +28,12 @@
             <li ng-class="{active: activeNav == 'geldlenen'}"><a href="#/geldlenen">Geld lenen</a></li>
             <li ng-class="{active: activeNav == 'geldinvesteren'}"><a href="#/geldinvesteren">Geld investeren</a></li>
             <li class="Mijn geld">
-                <a class="dropdown-toggle" data-toggle="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     Mijn geld <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Profiel</a></li>
-                    <li><a href="#/projecten">Mijn projecten</a></li>
+                    <li><a href="#">Mijn projecten</a></li>
                 </ul>
             </li>
             <div ng-controller="LoginCtrl">
@@ -261,11 +261,11 @@
 <script src="scripts/controllers/geldlenen_stap1_controller.js"></script>
 <script src="scripts/controllers/geldinvesteren/geldinvesteren.js"></script>
 <script src="scripts/controllers/geldinvesteren/geldinvesterendetail.js"></script>
+<script src="scripts/services/loginService.js"></script>
 <script src="scripts/controllers/menucontroller.js"></script>
 <script src="scripts/controllers/login.js"></script>
 <script src="scripts/lib/ui-bootstrap-custom-0.10.0.js"></script>
 <script src="scripts/lib/ui-bootstrap-custom-tpls-0.10.0.js"></script>
-
 <script src="scripts/directives/footer.js"></script>
 <!-- endbuild -->
 </body>

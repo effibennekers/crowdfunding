@@ -50,7 +50,15 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
     </dependencies>
 
@@ -64,12 +72,17 @@
                     <webResources>
                         <resource>
                             <directory>../crowdfunding-web/app</directory>
-                            <!--targetPath>WEB-INF</targetPath-->
+                        </resource>
+                        <resource>
+                            <directory>../crowdfunding-web/bower_components</directory>
+                            <targetPath>bower_components</targetPath>
                         </resource>
                     </webResources>
                 </configuration>
             </plugin>
         </plugins>
+
+
     </build>
 
 </project>
