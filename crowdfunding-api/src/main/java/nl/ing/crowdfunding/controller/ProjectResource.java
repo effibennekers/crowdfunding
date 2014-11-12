@@ -17,7 +17,7 @@ import java.util.List;
 public class ProjectResource {
 
     @Resource
-    private ProjectService projectService;
+    private ProjectService projectService = new ProjectService();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

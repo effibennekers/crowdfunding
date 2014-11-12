@@ -12,6 +12,7 @@
 	<properties>
 		<spring.version>4.0.2.RELEASE</spring.version>
 		<jersey.version>1.18</jersey.version>
+		<mysql.jdbc.version>5.1.34</mysql.jdbc.version>
 	</properties>
 
     <dependencyManagement>
@@ -49,9 +50,24 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.jdbc.version}</version>
+		</dependency>
 	</dependencies>
     </dependencyManagement>
 

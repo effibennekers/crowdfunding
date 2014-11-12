@@ -13,11 +13,10 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/investeringen")
-@Controller
 public class InvesteringResource {
 
     @Resource
-    private InvesteringService investeringService;
+    private InvesteringService investeringService = new InvesteringService();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

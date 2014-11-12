@@ -12,7 +12,7 @@ import java.util.List;
 public class KlantService {
 
 	@Resource
-	private KlantRepository klantRepository;
+	private KlantRepository klantRepository = new KlantRepository();
 
     public List<Klant> getAll() {
         return null;
