@@ -9,6 +9,7 @@ import java.util.Date;
 public class Project {
 
     private int projectid;
+    private String titel;
     private Date aangemeld;
     private String beschrijving;
     private BigDecimal doelbedrag;
@@ -26,7 +27,15 @@ public class Project {
         this.projectid = projectid;
     }
 
-    public Date getAangemeld() {
+    public String getTitel() {
+		return titel;
+	}
+
+	public void setTitel(String titel) {
+		this.titel = titel;
+	}
+
+	public Date getAangemeld() {
         return aangemeld;
     }
 
