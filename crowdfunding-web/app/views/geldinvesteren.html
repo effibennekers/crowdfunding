@@ -68,22 +68,23 @@
                                 <strong>Status</strong>
                                 {{investering.status}}
                             </div>
-                            <div class="col-xs-4" ng-show="investering.hideDetails">
+                            <div class="col-xs-4" ng-hide="investering.hideDetails">
                                 <button type="button" class="btn btn-primary" ng-click="openProjectDetail($index)">
                                     Open details
                                 </button>
                             </div>
                         </div>
-                        <div ng-hide="investering.hideDetails">
+                        <div ng-if="investering.hideDetails">
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <strong>Naam</strong> {{investering.voornaam}} {{investering.tussenvoegsels}} {{investering.achternaam}}
+                                    <strong>Naam</strong> {{investering.voornaam}} {{investering.tussenvoegsels}}
+                                    {{investering.achternaam}}
                                 </div>
                                 <div class="col-xs-4">
                                     <strong>Aangemeld</strong> {{investering.aangemeld}}
                                 </div>
                                 <div class="col-xs-4">
-                                    <strong>status</strong> € {{investering.status}}
+                                    <strong>status</strong> {{investering.status}}
                                 </div>
                             </div>
                             <div class="row">
@@ -94,15 +95,18 @@
                                         eros nisl, porta et feugiat id, lobortis nec lectus. Sed ut enim at</p>
                                 </div>
                                 <div class="col-xs-4">
-                                    <p>Totaal bedrag / verzameld bedrag</p>
+                                    <strong>Verzameld bedrag</strong> {{investering.bereiktbedrag}}
                                     <div class="progress progress-striped active">
-                                        <div class="progress-bar" style="{{getProgressBarWidth($index)}}"></div>
+                                        <div class="progress-bar" ng-class="investering.progressbar"
+                                             style="{{getProgressBarWidth($index)}}"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" ng-hide="investering.hideDetails">
+                        <div class="row" ng-show="investering.hideDetails">
                             <div class="col-xs-8">
+                                <button type="button" class="btn btn-primary"  ng-click="openInvestering($index)">
+                                    investeren
                                 </button>
                             </div>
                             <div class="col-xs-4">
