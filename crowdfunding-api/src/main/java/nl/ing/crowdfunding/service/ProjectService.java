@@ -12,7 +12,7 @@ import java.util.List;
 public class ProjectService {
 
 	@Resource
-	private ProjectRepository projectRepository;
+	private ProjectRepository projectRepository = new ProjectRepository();
 
     public List<Project> getAll() {
         return null;

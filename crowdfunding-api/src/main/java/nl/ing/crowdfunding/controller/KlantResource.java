@@ -13,11 +13,10 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/klanten")
-@Controller
 public class KlantResource {
 
     @Resource
-    private KlantService klantService;
+    private KlantService klantService = new KlantService();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

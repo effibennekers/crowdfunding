@@ -14,11 +14,10 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 
 @Path("/afbetalingen")
-@Controller
 public class AfbetalingResource {
 
     @Resource
-    private AfbetalingService afbetalingService;
+    private AfbetalingService afbetalingService = new AfbetalingService();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -12,7 +12,7 @@ import java.util.List;
 public class AfbetalingService {
 
 	@Resource
-	private AfbetalingRepository afbetalingRepository;
+	private AfbetalingRepository afbetalingRepository = new AfbetalingRepository();
 
     public List<Afbetaling> getAll() {
         return null;

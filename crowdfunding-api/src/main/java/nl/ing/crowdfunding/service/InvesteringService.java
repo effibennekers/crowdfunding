@@ -12,7 +12,7 @@ import java.util.List;
 public class InvesteringService {
 
 	@Resource
-	private InvesteringRepository investeringRepository;
+	private InvesteringRepository investeringRepository = new InvesteringRepository();
 
     public List<Investering> getAll() {
         return null;
