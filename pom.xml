@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.ing.hackathon</groupId>
-	<artifactId>crowd-funding</artifactId>
+	<artifactId>crowdfunding</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>Crowdfunding</name>
@@ -14,6 +14,7 @@
 		<jersey.version>1.18</jersey.version>
 	</properties>
 
+    <dependencyManagement>
 	<dependencies>
         <dependency>
             <groupId>com.sun.jersey</groupId>
@@ -47,6 +48,7 @@
             <version>${spring.version}</version>
         </dependency>
 	</dependencies>
+    </dependencyManagement>
 
 	<build>
 		<plugins>
@@ -69,5 +71,10 @@
 			</plugin>
 		</plugins>
 	</build>
+
+    <modules>
+        <module>crowdfunding-api</module>
+        <module>crowdfunding-web</module>
+    </modules>
 
 </project>
