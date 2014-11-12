@@ -5,19 +5,6 @@
 
     <display-name>Crowdfunding Web Application</display-name>
 
-    <context-param>
-        <param-name>contextClass</param-name>
-        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
-    </context-param>
-
-    <!-- Configuration locations must consist of one or more comma- or space-delimited
-         fully-qualified @Configuration classes. Fully-qualified packages may also be
-         specified for component-scanning -->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>nl.ing.crowdfunding.configuration.AppConfiguration</param-value>
-    </context-param>
-
     <!-- Bootstrap the root application context as usual using ContextLoaderListener -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
