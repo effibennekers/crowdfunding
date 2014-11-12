@@ -15,7 +15,7 @@
     <artifactId>crowdfunding-web</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>crowdfunding-web</name>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <url>http://maven.apache.org</url>
 
     <properties>
