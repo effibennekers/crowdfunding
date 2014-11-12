@@ -18,13 +18,16 @@ public class Klant {
     private String plaats;
     private String debtoriban;
     private String creditoriban;
-    private BigInteger telefoonnummer;
-    private BigInteger telefoonnummersms;
-    private BigInteger telefoonnummerrmobiel;
+    private String telefoonnummer;
+    private String telefoonnummersms;
+    private String telefoonnummermobiel;
     private Date geboortedag;
     private Boolean ingklant;
     private String contract;
     private String email;
+    private String postcode;
+    private String authtoken;
+    private String password;
 
     public int getKlantid() {
         return klantid;
@@ -106,28 +109,28 @@ public class Klant {
         this.creditoriban = creditoriban;
     }
 
-    public BigInteger getTelefoonnummer() {
+    public String getTelefoonnummer() {
         return telefoonnummer;
     }
 
-    public void setTelefoonnummer(BigInteger telefoonnummer) {
+    public void setTelefoonnummer(String telefoonnummer) {
         this.telefoonnummer = telefoonnummer;
     }
 
-    public BigInteger getTelefoonnummersms() {
+    public String getTelefoonnummersms() {
         return telefoonnummersms;
     }
 
-    public void setTelefoonnummersms(BigInteger telefoonnummersms) {
+    public void setTelefoonnummersms(String telefoonnummersms) {
         this.telefoonnummersms = telefoonnummersms;
     }
 
-    public BigInteger getTelefoonnummerrmobiel() {
-        return telefoonnummerrmobiel;
+    public String getTelefoonnummermobiel() {
+        return telefoonnummermobiel;
     }
 
-    public void setTelefoonnummerrmobiel(BigInteger telefoonnummerrmobiel) {
-        this.telefoonnummerrmobiel = telefoonnummerrmobiel;
+    public void setTelefoonnummermobiel(String telefoonnummermobiel) {
+        this.telefoonnummermobiel = telefoonnummermobiel;
     }
 
     public Date getGeboortedag() {
@@ -160,5 +163,29 @@ public class Klant {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public String getAuthtoken() {
+        return authtoken;
+    }
+
+    public void setAuthtoken(String authtoken) {
+        this.authtoken = authtoken;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

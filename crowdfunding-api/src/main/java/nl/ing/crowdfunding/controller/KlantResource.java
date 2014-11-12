@@ -36,7 +36,7 @@ public class KlantResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response put(Klant klant) {
         klantService.save(klant);
-        return ResourceUtil.response(klant.toString());
+        return ResourceUtil.response(klant.getEmail());
     }
 
     @Path("/{id}")
