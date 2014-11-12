@@ -52,7 +52,7 @@ public class ProjectRepository {
 			if (project.getProjectid() == 0) {
 				// insert
 				PreparedStatement preparedStatement = (PreparedStatement) connection
-						.prepareStatement("insert into crowdfunding.project values (default,?,?,?,?,?,?,?,?,?)");
+						.prepareStatement("insert into crowdfunding.project values (default,?,?,?,?,?,?,?,?,?,?)");
 				preparedStatement.setString(1, project.getTitel());
 				preparedStatement.setDate(2, new java.sql.Date(project.getAangemeld().getTime()));
 				preparedStatement.setString(3, project.getBeschrijving());
@@ -61,7 +61,8 @@ public class ProjectRepository {
 				preparedStatement.setBigDecimal(6, project.getRentepercentage());
 				preparedStatement.setInt(7, project.getRisicoprofiel());
 				preparedStatement.setInt(8, project.getEigenaar());
-				preparedStatement.setString(9, project.getStatus().name());
+				preparedStatement.setInt(9, project.getEigenaarrisicoprofiel());
+				preparedStatement.setString(10, project.getStatus().name());
 				preparedStatement.executeUpdate();
 			} else {
 				// update existing
@@ -75,6 +76,7 @@ public class ProjectRepository {
 				buff.append(", rentepercentage=?");
 				buff.append(", risicoprofiel=?");
 				buff.append(", eigenaar=?");
+				buff.append(", eigenaarrisicoprofiel=?");
 				buff.append(", status=?");
 				buff.append("WHERE projectid=?");
 				
@@ -89,8 +91,9 @@ public class ProjectRepository {
                 preparedStatement.setBigDecimal(6, project.getRentepercentage());
                 preparedStatement.setInt(7, project.getRisicoprofiel());
                 preparedStatement.setInt(8, project.getEigenaar());  
-                preparedStatement.setString(9, project.getStatus().name());
-                preparedStatement.setInt(10, project.getProjectid());
+                preparedStatement.setInt(9, project.getEigenaarrisicoprofiel());
+                preparedStatement.setString(10, project.getStatus().name());
+                preparedStatement.setInt(11, project.getProjectid());
                 preparedStatement.executeUpdate();
 			}
 		} catch (Exception e) {

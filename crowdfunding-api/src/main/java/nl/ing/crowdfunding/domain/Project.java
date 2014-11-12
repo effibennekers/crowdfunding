@@ -17,6 +17,7 @@ public class Project {
     private BigDecimal rentepercentage;
     private int risicoprofiel;
     private int eigenaar;
+    private int eigenaarrisicoprofiel;
     private ProjectStatus status;
 
     public int getProjectid() {
@@ -91,7 +92,15 @@ public class Project {
         this.eigenaar = eigenaar;
     }
 
-    public ProjectStatus getStatus() {
+    public int getEigenaarrisicoprofiel() {
+		return eigenaarrisicoprofiel;
+	}
+
+	public void setEigenaarrisicoprofiel(int eigenaarrisicoprofiel) {
+		this.eigenaarrisicoprofiel = eigenaarrisicoprofiel;
+	}
+
+	public ProjectStatus getStatus() {
         return status;
     }
 
