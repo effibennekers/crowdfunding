@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionUtils {
-	public static Connection getConnecetion() throws SQLException 
+	public static Connection getConnection() throws SQLException
 	{
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 		Connection connection = DriverManager

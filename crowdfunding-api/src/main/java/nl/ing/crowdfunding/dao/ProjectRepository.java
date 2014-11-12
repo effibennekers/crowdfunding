@@ -17,7 +17,7 @@ public class ProjectRepository {
 	public Project find(String id) {
 		Project project = new Project();
 		try {
-			Connection connection = ConnectionUtils.getConnecetion();
+			Connection connection = ConnectionUtils.getConnection();
 
 			PreparedStatement preparedStatement = (PreparedStatement) connection
 					.prepareStatement("select * from crowdfunding.project where projectid= ? ; ");
