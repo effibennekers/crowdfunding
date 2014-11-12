@@ -25,7 +25,7 @@ angular.module('CrowdFundingApp').controller('LoginCtrl', function ($scope, $mod
     };
 });
 
-angular.module('CrowdFundingApp').controller('LoginInstanceCtrl', function ($scope, $modalInstance, items) {
+angular.module('CrowdFundingApp').controller('LoginInstanceCtrl', function ($scope, $modalInstance, items, loginService) {
 
     $scope.items = items;
     $scope.selected = {
@@ -39,5 +39,35 @@ angular.module('CrowdFundingApp').controller('LoginInstanceCtrl', function ($sco
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
+
+
+    $scope.signUp = function() {
+
+        var signUp = setSignUpParams();
+
+        signUp.save();
+
+    }
+
+    $scope.input = {};
+
+
+    function setSignUpParams() {
+
+        var signUp = loginService.signUp();
+
+        signUp.email = $scope.input.email;
+        signUp.first = $scope.input.first;
+        signUp.last = $scope.input.last;
+        signUp.passwd = $scope.input.passwd;
+
+        return signUp;
+
+
+    }
+
+
+
+
 });
 

@@ -5,7 +5,9 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/superhero.css"/>
     <link rel="stylesheet" href="styles/main.css">
 </head>
 
@@ -132,40 +134,34 @@
                         <div class="form-group">
                             <label for="email" class="col-md-3 control-label">Email</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" name="email" placeholder="Email Address">
+                                <input type="text" class="form-control" name="email" ng-model="input.email" placeholder="Email Address">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="firstname" class="col-md-3 control-label">First Name</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" name="firstname" placeholder="First Name">
+                                <input type="text" class="form-control" name="firstname" ng-model="input.first" placeholder="First Name">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="lastname" class="col-md-3 control-label">Last Name</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" name="lastname" placeholder="Last Name">
+                                <input type="text" class="form-control" name="lastname" ng-model="input.last" placeholder="Last Name">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="password" class="col-md-3 control-label">Password</label>
                             <div class="col-md-9">
-                                <input type="password" class="form-control" name="passwd" placeholder="Password">
+                                <input type="password" class="form-control" name="passwd" ng-model="input.passwd" placeholder="Password">
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="icode" class="col-md-3 control-label">Invitation Code</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="icode" placeholder="">
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <!-- Button -->
                             <div class="col-md-offset-3 col-md-9">
-                                <button id="btn-signup" type="button" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Sign Up</button>
+                                <button id="btn-signup" type="button" ng-click="signUp()" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Sign Up</button>
                                 <span style="margin-left:8px;">or</span>
                             </div>
                         </div>
@@ -238,28 +234,29 @@
 </script>
 
 <!--[if lt IE 9]>
-<script src="bower_components/es5-shim/es5-shim.js"></script>
-<script src="bower_components/json3/lib/json3.min.js"></script>
+<script src="../bower_components/es5-shim/es5-shim.js"></script>
+<script src="../bower_components/json3/lib/json3.min.js"></script>
 <![endif]-->
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
-<script src="bower_components/jquery/dist/jquery.js"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/json3/lib/json3.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-<script src="bower_components/angular-resource/angular-resource.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
-<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-<script src="bower_components/angular-animate/angular-animate.js"></script>
-<script src="bower_components/angular-touch/angular-touch.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/json3/lib/json3.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="../bower_components/angular-resource/angular-resource.js"></script>
+<script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.js"></script>
+<script src="../bower_components/angular-touch/angular-touch.js"></script>
+<script src="../bower_components/angular-route/angular-route.js"></script>
 <!-- endbower -->
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/projecten.js"></script>
 <script src="scripts/controllers/geldlenen_stap1_controller.js"></script>
 <script src="scripts/controllers/geldinvesteren.js"></script>
+<script src="scripts/services/loginService.js"></script>
 <script src="scripts/controllers/menucontroller.js"></script>
 <script src="scripts/controllers/login.js"></script>
 <script src="scripts/lib/ui-bootstrap-custom-0.10.0.js"></script>
