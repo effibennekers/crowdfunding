@@ -5,6 +5,11 @@
 
     <display-name>Crowdfunding Web Application</display-name>
 
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
+
     <!-- Bootstrap the root application context as usual using ContextLoaderListener -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

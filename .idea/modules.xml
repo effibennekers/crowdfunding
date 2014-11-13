@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CrowdFunding.iml" filepath="$PROJECT_DIR$/.idea/CrowdFunding.iml" />
+      <module fileurl="file://$PROJECT_DIR$/crowdfunding.iml" filepath="$PROJECT_DIR$/crowdfunding.iml" />
+      <module fileurl="file://$PROJECT_DIR$/crowdfunding-api/crowdfunding-api.iml" filepath="$PROJECT_DIR$/crowdfunding-api/crowdfunding-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/crowdfunding-web/crowdfunding-web.iml" filepath="$PROJECT_DIR$/crowdfunding-web/crowdfunding-web.iml" />
     </modules>
   </component>
 </project>
