@@ -31,6 +31,13 @@ public class KlantResource {
         return klantService.getById(id);
     }
 
+    @Path("/login")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Klant get(@QueryParam("email") String email, @QueryParam("password") String password) {
+        return klantService.getByEmail(email, password);
+    }
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

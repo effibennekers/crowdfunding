@@ -1,12 +1,15 @@
 <!doctype html>
 <html class="no-js">
 <head>
+
+
   <meta charset="utf-8">
   <title></title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
   <link rel="stylesheet" href="styles/main.css">
+
 </head>
 
 <body ng-app="CrowdFundingApp">
@@ -27,6 +30,7 @@
       <li ng-class="{active: activeNav == 'home'}"><a href="#">Home</a></li>
       <li ng-class="{active: activeNav == 'geldlenen'}"><a href="#/geldlenen">Geld lenen</a></li>
       <li ng-class="{active: activeNav == 'geldinvesteren'}"><a href="#/geldinvesteren">Geld investeren</a></li>
+        <li ng-class="{active: activeNav == 'mijninvesteringen'}"><a href="#/mijninvesteringen">Mijn investeren</a></li>
       <li class="Mijn geld">
         <a class="dropdown-toggle" data-toggle="dropdown">
           Mijn geld <span class="caret"></span>
@@ -111,6 +115,7 @@
 <script src="scripts/controllers/geldlenen_controller.js"></script>
 <script src="scripts/controllers/geldinvesteren/geldinvesteren.js"></script>
 <script src="scripts/controllers/geldinvesteren/investeren.js"></script>
+<script src="scripts/controllers/mijninvesterigen.js"></script>
 <script src="scripts/services/loginService.js"></script>
 <script src="scripts/services/stateServices/investerenStateService.js"></script>
 <script src="scripts/controllers/menucontroller.js"></script>

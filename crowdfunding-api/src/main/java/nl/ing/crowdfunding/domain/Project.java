@@ -1,6 +1,7 @@
 package nl.ing.crowdfunding.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -20,6 +21,18 @@ public class Project {
     private int eigenaarrisicoprofiel;
     private ProjectStatus status;
 
+    public ArrayList<String> getInvesteringIds() {
+        return investeringIds;
+    }
+
+    public void setInvesteringIds(ArrayList<String> investeringIds) {
+        this.investeringIds = investeringIds;
+    }
+
+
+    private ArrayList<String> investeringIds;
+
+
     public int getProjectid() {
         return projectid;
     }
@@ -29,14 +42,14 @@ public class Project {
     }
 
     public String getTitel() {
-		return titel;
-	}
+        return titel;
+    }
 
-	public void setTitel(String titel) {
-		this.titel = titel;
-	}
+    public void setTitel(String titel) {
+        this.titel = titel;
+    }
 
-	public Date getAangemeld() {
+    public Date getAangemeld() {
         return aangemeld;
     }
 
@@ -93,18 +106,22 @@ public class Project {
     }
 
     public int getEigenaarrisicoprofiel() {
-		return eigenaarrisicoprofiel;
-	}
+        return eigenaarrisicoprofiel;
+    }
 
-	public void setEigenaarrisicoprofiel(int eigenaarrisicoprofiel) {
-		this.eigenaarrisicoprofiel = eigenaarrisicoprofiel;
-	}
+    public void setEigenaarrisicoprofiel(int eigenaarrisicoprofiel) {
+        this.eigenaarrisicoprofiel = eigenaarrisicoprofiel;
+    }
 
-	public ProjectStatus getStatus() {
+    public ProjectStatus getStatus() {
         return status;
     }
 
     public void setStatus(ProjectStatus status) {
         this.status = status;
+    }
+
+    public boolean isNieuw() {
+        return getProjectid() == 0;
     }
 }

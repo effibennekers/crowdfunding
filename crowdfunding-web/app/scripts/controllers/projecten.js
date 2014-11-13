@@ -10,10 +10,10 @@ angular.module('CrowdFundingApp')
         $scope.test = "test";
 
         $scope.projects = [
-            {nr: '1', naam: 'Snackbar', looptijd: '48 maanden', rente: '8,0 %'},
-            {nr: '2', naam: 'Onroeren goed', looptijd: '60 maanden', rente: '7,0 %'},
-            {nr: '3', naam: 'Autoverhuur', looptijd: '12 maanden', rente: '10,0 %'},
-            {nr: '4', naam: 'Muziekband', looptijd: '48 maanden', rente: '8,0 %'}
+            {nr: '326', naam: 'Snackbar', looptijd: '48 maanden', rente: '7,0 %', totaalbedrag: '35.000', categorie: 'laag risico'},
+            {nr: '547', naam: 'Onroeren goed', looptijd: '60 maanden', rente: '5,0 %', totaalbedrag: '235.000', categorie: 'hoog risico'},
+            {nr: '660', naam: 'Autoverhuur', looptijd: '12 maanden', rente: '8,0 %', totaalbedrag: '7.500', categorie: 'gemiddeld risico'},
+            {nr: '788', naam: 'Muziekband', looptijd: '48 maanden', rente: '4,0 %', totaalbedrag: '2.500', categorie: 'laag risico'}
         ];
     })
 
