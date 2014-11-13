@@ -15,7 +15,7 @@ public class KlantService {
 	private KlantRepository klantRepository = new KlantRepository();
 
     public List<Klant> getAll() {
-        return null;
+    	return klantRepository.getAll();
     }
 
 	public Klant getById(String id) {

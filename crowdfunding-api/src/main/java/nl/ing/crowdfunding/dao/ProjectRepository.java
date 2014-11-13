@@ -3,6 +3,8 @@ package nl.ing.crowdfunding.dao;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import nl.ing.crowdfunding.domain.Project;
 import nl.ing.crowdfunding.domain.ProjectStatus;
@@ -15,6 +17,35 @@ import com.mysql.jdbc.PreparedStatement;
 @Repository
 public class ProjectRepository {
 
+	public List<Project> getAll() {
+		List<Project> projectList = new ArrayList<Project>();
+		try {
+			Connection connection = ConnectionUtils.getConnection();
+
+			PreparedStatement preparedStatement = (PreparedStatement) connection
+					.prepareStatement("select * from crowdfunding.project ; ");
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				Project project = new Project();
+                project.setProjectid(resultSet.getInt("projectid"));
+				project.setTitel(resultSet.getString("titel"));
+				project.setAangemeld(resultSet.getDate("aangemeld"));
+				project.setBeschrijving(resultSet.getString("beschrijving"));
+				project.setDoelbedrag(resultSet.getBigDecimal("doelbedrag"));
+				project.setOpentijd(resultSet.getInt("opentijd"));
+				project.setRentepercentage(resultSet.getBigDecimal("rentepercentage"));
+				project.setRisicoprofiel(resultSet.getInt("risicoprofiel"));
+				project.setEigenaar(resultSet.getInt("eigenaar"));
+				project.setStatus(ProjectStatus.fromValue(resultSet.getString("status")));
+				projectList.add(project);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return projectList;
+	}
+	
 	public Project find(String id) {
 		Project project = new Project();
 		try {

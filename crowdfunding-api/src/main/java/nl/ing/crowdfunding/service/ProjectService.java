@@ -15,7 +15,7 @@ public class ProjectService {
 	private ProjectRepository projectRepository = new ProjectRepository();
 
     public List<Project> getAll() {
-        return null;
+    	return projectRepository.getAll();
     }
 
 	public Project getById(String id) {
