@@ -8,9 +8,9 @@ import java.math.BigDecimal;
 public class Investering {
 
     private int id;
-    private Klant investeerder;
+    private int investeerder;
     private BigDecimal bedrag;
-    private Project project;
+    private int project;
     private String beloning;
     private BigDecimal rentepercentage;
     private InvesteringsStatus status;
@@ -24,11 +24,11 @@ public class Investering {
         this.id = id;
     }
 
-    public Klant getInvesteerder() {
+    public int getInvesteerder() {
         return investeerder;
     }
 
-    public void setInvesteerder(Klant investeerder) {
+    public void setInvesteerder(int investeerder) {
         this.investeerder = investeerder;
     }
 
@@ -40,11 +40,11 @@ public class Investering {
         this.bedrag = bedrag;
     }
 
-    public Project getProject() {
+    public int getProject() {
         return project;
     }
 
-    public void setProject(Project project) {
+    public void setProject(int project) {
         this.project = project;
     }
 
