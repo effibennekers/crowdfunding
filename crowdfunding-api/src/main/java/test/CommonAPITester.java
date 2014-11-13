@@ -1,7 +1,9 @@
 package test;
 
 import nl.ing.crowdfunding.domain.ing.common.Transfer;
+import nl.ing.crowdfunding.engine.PaymentsScheduler;
 import nl.ing.crowdfunding.service.CommonAPIConnectionService;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -22,4 +24,11 @@ public class CommonAPITester {
         }
 
     }
+
+  @Ignore
+  @Test
+  public void testSchedule() {
+    PaymentsScheduler ps = new PaymentsScheduler();
+    ps.runPayments();
+  }
 }

@@ -1,6 +1,7 @@
 package nl.ing.crowdfunding.domain;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by M04B081 on 12-11-2014.
@@ -15,6 +16,16 @@ public class Investering {
     private BigDecimal rentepercentage;
     private InvesteringsStatus status;
     private int afbetaalperiode;
+
+  public List<Afbetaling> getAfbetalingen() {
+    return afbetalingen;
+  }
+
+  public void setAfbetalingen(List<Afbetaling> afbetalingen) {
+    this.afbetalingen = afbetalingen;
+  }
+
+  private List<Afbetaling> afbetalingen;
 
     public int getId() {
         return id;

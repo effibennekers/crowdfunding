@@ -1,6 +1,7 @@
 package nl.ing.crowdfunding.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -19,6 +20,19 @@ public class Project {
     private int eigenaar;
     private int eigenaarrisicoprofiel;
     private ProjectStatus status;
+
+  public ArrayList<String> getInvesteringIds() {
+    return investeringIds;
+  }
+
+  public void setInvesteringIds(ArrayList<String> investeringIds) {
+    this.investeringIds = investeringIds;
+  }
+
+
+
+  private ArrayList<String> investeringIds;
+
 
     public int getProjectid() {
         return projectid;
@@ -107,4 +121,6 @@ public class Project {
     public void setStatus(ProjectStatus status) {
         this.status = status;
     }
+
+
 }
