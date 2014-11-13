@@ -3,8 +3,10 @@ package test;
 import nl.ing.crowdfunding.domain.ing.common.Transfer;
 import nl.ing.crowdfunding.engine.PaymentsScheduler;
 import nl.ing.crowdfunding.service.CommonAPIConnectionService;
+import nl.ing.crowdfunding.service.ProjectService;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.util.ReflectionUtils;
 
 
 /**
@@ -24,11 +26,4 @@ public class CommonAPITester {
         }
 
     }
-
-  @Ignore
-  @Test
-  public void testSchedule() {
-    PaymentsScheduler ps = new PaymentsScheduler();
-    ps.runPayments();
-  }
 }
