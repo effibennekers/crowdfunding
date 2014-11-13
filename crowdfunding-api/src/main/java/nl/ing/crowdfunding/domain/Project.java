@@ -20,6 +20,25 @@ public class Project {
     private int eigenaar;
     private int eigenaarrisicoprofiel;
     private ProjectStatus status;
+    private ArrayList<String> investeringIds;
+    private String naam;
+    private String bereiktBedrag;
+
+    public String getNaam() {
+        return naam;
+    }
+
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
+
+    public String getBereiktBedrag() {
+        return bereiktBedrag;
+    }
+
+    public void setBereiktBedrag(String bereiktBedrag) {
+        this.bereiktBedrag = bereiktBedrag;
+    }
 
     public ArrayList<String> getInvesteringIds() {
         return investeringIds;
@@ -28,10 +47,6 @@ public class Project {
     public void setInvesteringIds(ArrayList<String> investeringIds) {
         this.investeringIds = investeringIds;
     }
-
-
-    private ArrayList<String> investeringIds;
-
 
     public int getProjectid() {
         return projectid;
