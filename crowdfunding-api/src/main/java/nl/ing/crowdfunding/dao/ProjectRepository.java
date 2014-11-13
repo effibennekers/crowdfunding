@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import nl.ing.crowdfunding.domain.Investering;
+import nl.ing.crowdfunding.domain.InvesteringsStatus;
 import nl.ing.crowdfunding.domain.Project;
 import nl.ing.crowdfunding.domain.ProjectStatus;
 import nl.ing.crowdfunding.util.ConnectionUtils;
@@ -58,6 +60,26 @@ public class ProjectRepository {
 		}
 		return project;
 	}
+    
+    public List<Project> findByKlant(String klantId) {
+    	List<Project> projectList = new ArrayList<Project>();
+    	try {
+            Connection connection = ConnectionUtils.getConnection();
+
+            PreparedStatement preparedStatement = (PreparedStatement) connection
+                    .prepareStatement("select * from crowdfunding.project WHERE eigenaar=? ; ");
+            preparedStatement.setString(1, klantId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+            	Project project = resultSetToProject(resultSet);
+				projectList.add(project);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return projectList;
+    }
 
 	public void save(Project project) {
 		try {

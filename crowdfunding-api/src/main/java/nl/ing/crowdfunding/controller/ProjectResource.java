@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import nl.ing.crowdfunding.domain.Investering;
 import nl.ing.crowdfunding.domain.Project;
 import nl.ing.crowdfunding.service.ProjectService;
 import nl.ing.crowdfunding.util.ResourceUtil;
@@ -37,6 +38,13 @@ public class ProjectResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Project get(@PathParam("id") String id) {
         return projectService.getById(id);
+    }
+    
+    @Path("/klant/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Project> getByKlantId(@PathParam("id") String klantId) {
+    	return projectService.getByKlantId(klantId);
     }
 
     @PUT

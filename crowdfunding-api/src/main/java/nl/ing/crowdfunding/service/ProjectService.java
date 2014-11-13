@@ -2,11 +2,14 @@ package nl.ing.crowdfunding.service;
 
 import nl.ing.crowdfunding.dao.KlantRepository;
 import nl.ing.crowdfunding.dao.ProjectRepository;
+import nl.ing.crowdfunding.domain.Investering;
 import nl.ing.crowdfunding.domain.Klant;
 import nl.ing.crowdfunding.domain.Project;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
@@ -30,6 +33,10 @@ public class ProjectService {
 
 	public Project getById(String id) {
 		return projectRepository.find(id);
+	}
+	
+	public List<Project> getByKlantId(String klantId) {
+		return projectRepository.findByKlant(klantId);
 	}
 
 	public void deleteById(String id) {
