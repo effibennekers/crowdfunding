@@ -76,7 +76,7 @@
         <div class="form-group">
             <label name="inputRente" class="col-lg-3">Rentepercentage per jaar(%)</label>
             <div class="col-lg-9">
-                <input type="number" min="0" max="60" step="6" id="inputRente" name="rente" ng-model="fee.rente"/>
+                <input type="number" min="0" max="60" step="1" id="inputRente" name="rente" ng-model="fee.rente"/>
             </div>
         </div>
         <!--
@@ -89,8 +89,8 @@
             <label class="col-lg-3">Eenmalige succes fee</label>
             <div class="col-lg-9">
                 &euro;&nbsp;{{fee.berekend}}
-                <span class="help-block">De eenmalige succes fee wordt berekend over uw kredietbedrag en is opgebouwd uit een basistarief van 1,25%.
-Let op: de eenmalige succes fee wordt in mindering gebracht op het uit te keren kredietbedrag.</span>
+                <span class="help-block">De eenmalige succes fee wordt berekend over uw kredietbedrag en is opgebouwd uit een basistarief van 0,75%.</span>
+                <span><strong>Let op:</strong> de eenmalige succes fee wordt in mindering gebracht op het uit te keren kredietbedrag.</span>
             </div>
         </div>
         <!--

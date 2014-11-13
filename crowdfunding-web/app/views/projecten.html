@@ -9,7 +9,7 @@
 <table class="table table-striped table-hover ">
     <thead>
     <tr>
-        <th>#</th>
+        <th>Projectnr.</th>
         <th>Info</th>
         <th>Naam project</th>
         <th>Looptijd</th>
@@ -21,15 +21,15 @@
         <td>{{project.nr}}</td>
         <td>
             <div>
-                <button type="button" class="btm btn-info" data-toggle="collapse" data-target="#line1">Details</button>
+                <button type="button" class="btm btn-info" data-toggle="collapse" data-target="#{{$index}}">Details</button>
             </div>
         </td>
         <td>
             {{project.naam}}
-            <div id="line1" class="collapse">
+            <div id="{{$index}}" class="collapse">
                 <hr>
-                <div>Totaalbedrag: &euro; 250.000</div>
-                <div>Classificatie: {{test}}</div>
+                <div>Totaalbedrag: &euro; {{project.totaalbedrag}}</div>
+                <div>Classificatie: {{project.categorie}}</div>
             </div>
         </td>
         <td>{{project.looptijd}}</td>
