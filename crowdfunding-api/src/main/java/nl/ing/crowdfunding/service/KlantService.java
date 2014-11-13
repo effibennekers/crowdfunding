@@ -22,6 +22,10 @@ public class KlantService {
 		return klantRepository.find(id);
 	}
 
+    public Klant getByEmail(String email, String password) {
+        return klantRepository.find(email, password);
+    }
+
 	public void deleteById(String id) {
         klantRepository.delete(id);
 	}

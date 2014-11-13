@@ -22,7 +22,7 @@ public class Klant {
     private String telefoonnummersms;
     private String telefoonnummermobiel;
     private Date geboortedag;
-    private Boolean ingklant;
+    private String ingklant;
     private String contract;
     private String email;
     private String postcode;
@@ -141,11 +141,11 @@ public class Klant {
         this.geboortedag = geboortedag;
     }
 
-    public Boolean getIngklant() {
+    public String getIngklant() {
         return ingklant;
     }
 
-    public void setIngklant(Boolean ingklant) {
+    public void setIngklant(String ingklant) {
         this.ingklant = ingklant;
     }
 

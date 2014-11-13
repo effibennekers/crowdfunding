@@ -39,7 +39,48 @@ public class KlantRepository {
                         .getDate("geboortedag"));
                 klant.setHuisnummer(resultSet.getInt("huisnummer"));
                 klant.setHuisnummerav(resultSet.getString("huisnummerav"));
-                klant.setIngklant(resultSet.getBoolean("ingklant"));
+                klant.setIngklant(resultSet.getString("ingklant"));
+                klant.setPlaats(resultSet.getString("plaats"));
+                klant.setStraatnaam(resultSet.getString("straatnaam"));
+                klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
+                klant.setTelefoonnummermobiel(resultSet.getString("telefoonnummermobiel"));
+                klant.setTelefoonnummersms(resultSet.getString("telefoonnummersms"));
+                klant.setTussenvoegsels(resultSet.getString("tussenvoegsels"));
+                klant.setVoornaam(resultSet.getString("voornaam"));
+                klant.setPostcode(resultSet.getString("postcode"));
+                klant.setAuthtoken(resultSet.getString("authtoken"));
+                klant.setPassword(resultSet.getString("password"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return klant;
+    }
+
+
+    public Klant find(String email, String password) {
+        Klant klant = new Klant();
+        try {
+            Connection connection = ConnectionUtils.getConnection();
+
+            PreparedStatement preparedStatement = (PreparedStatement) connection
+                    .prepareStatement("select * from crowdfunding.klant where email= ? and password= ? ; ");
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                klant.setKlantid(resultSet.getInt("klantid"));
+                klant.setAchternaam(resultSet.getString("achternaam"));
+                klant.setContract(resultSet.getString("contract"));
+                klant.setCreditoriban(resultSet.getString("creditoriban"));
+                klant.setDebtoriban(resultSet.getString("debtoriban"));
+                klant.setEmail(resultSet.getString("email"));
+                klant.setGeboortedag(resultSet
+                        .getDate("geboortedag"));
+                klant.setHuisnummer(resultSet.getInt("huisnummer"));
+                klant.setHuisnummerav(resultSet.getString("huisnummerav"));
+                klant.setIngklant(resultSet.getString("ingklant"));
                 klant.setPlaats(resultSet.getString("plaats"));
                 klant.setStraatnaam(resultSet.getString("straatnaam"));
                 klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
@@ -81,7 +122,7 @@ public class KlantRepository {
                 preparedStatement.setString(11, klant.getTelefoonnummersms());
                 preparedStatement.setString(12, klant.getTelefoonnummermobiel());
                 preparedStatement.setDate(13, new java.sql.Date(klant.getGeboortedag().getTime()));
-                preparedStatement.setBoolean(14, klant.getIngklant());
+                preparedStatement.setString(14, klant.getIngklant());
                 preparedStatement.setString(15, klant.getContract());
                 preparedStatement.setString(16, klant.getEmail());
                 preparedStatement.setString(17, klant.getPostcode());
@@ -129,13 +170,14 @@ public class KlantRepository {
                 preparedStatement.setString(11, klant.getTelefoonnummersms());
                 preparedStatement.setString(12, klant.getTelefoonnummermobiel());
                 preparedStatement.setDate(13, new java.sql.Date(klant.getGeboortedag().getTime()));
-                preparedStatement.setBoolean(14, klant.getIngklant());
+                preparedStatement.setString(14, klant.getIngklant());
                 preparedStatement.setString(15, klant.getContract());
                 preparedStatement.setString(16, klant.getEmail());
                 preparedStatement.setInt(17, klant.getKlantid());
                 preparedStatement.setString(18, klant.getPostcode());
                 preparedStatement.setString(19, klant.getAuthtoken());
                 preparedStatement.setString(20, klant.getPassword());
+                System.out.println(preparedStatement);
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
             }
