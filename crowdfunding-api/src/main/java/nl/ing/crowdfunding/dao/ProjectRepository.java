@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import nl.ing.crowdfunding.domain.Project;
@@ -67,7 +68,7 @@ public class ProjectRepository {
 				PreparedStatement preparedStatement = (PreparedStatement) connection
 						.prepareStatement("insert into crowdfunding.project values (default,?,?,?,?,?,?,?,?,?,?)");
 				preparedStatement.setString(1, project.getTitel());
-				preparedStatement.setDate(2, new java.sql.Date(project.getAangemeld().getTime()));
+				preparedStatement.setDate(2, new java.sql.Date(new Date().getTime()));
 				preparedStatement.setString(3, project.getBeschrijving());
 				preparedStatement.setBigDecimal(4, project.getDoelbedrag());
 				preparedStatement.setInt(5, project.getOpentijd());
