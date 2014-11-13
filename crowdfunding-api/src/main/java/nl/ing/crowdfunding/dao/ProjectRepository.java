@@ -3,6 +3,7 @@ package nl.ing.crowdfunding.dao;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,21 +24,11 @@ public class ProjectRepository {
 			Connection connection = ConnectionUtils.getConnection();
 
 			PreparedStatement preparedStatement = (PreparedStatement) connection
-					.prepareStatement("select * from crowdfunding.project ; ");
+					.prepareStatement("select * from crowdfunding.project;");
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				Project project = new Project();
-                project.setProjectid(resultSet.getInt("projectid"));
-				project.setTitel(resultSet.getString("titel"));
-				project.setAangemeld(resultSet.getDate("aangemeld"));
-				project.setBeschrijving(resultSet.getString("beschrijving"));
-				project.setDoelbedrag(resultSet.getBigDecimal("doelbedrag"));
-				project.setOpentijd(resultSet.getInt("opentijd"));
-				project.setRentepercentage(resultSet.getBigDecimal("rentepercentage"));
-				project.setRisicoprofiel(resultSet.getInt("risicoprofiel"));
-				project.setEigenaar(resultSet.getInt("eigenaar"));
-				project.setStatus(ProjectStatus.fromValue(resultSet.getString("status")));
+                Project project = resultSetToProject(resultSet);
 				projectList.add(project);
 			}
 		} catch (Exception e) {
@@ -45,9 +36,11 @@ public class ProjectRepository {
 		}
 		return projectList;
 	}
-	
-	public Project find(String id) {
-		Project project = new Project();
+
+
+
+    public Project find(String id) {
+		Project project = null;
 		try {
 			Connection connection = ConnectionUtils.getConnection();
 
@@ -57,18 +50,7 @@ public class ProjectRepository {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-                project.setProjectid(resultSet.getInt("projectid"));
-				project.setTitel(resultSet.getString("titel"));
-				project.setAangemeld(resultSet.getDate("aangemeld"));
-				project.setBeschrijving(resultSet.getString("beschrijving"));
-				project.setDoelbedrag(resultSet.getBigDecimal("doelbedrag"));
-				project.setOpentijd(resultSet.getInt("opentijd"));
-				project.setRentepercentage(resultSet
-						.getBigDecimal("rentepercentage"));
-				project.setRisicoprofiel(resultSet.getInt("risicoprofiel"));
-				project.setEigenaar(resultSet.getInt("eigenaar"));
-				project.setStatus(ProjectStatus.fromValue(resultSet
-						.getString("status")));
+                project = resultSetToProject(resultSet);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -147,6 +129,21 @@ public class ProjectRepository {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+    }
+
+    private Project resultSetToProject(ResultSet resultSet) throws SQLException {
+        Project project = new Project();
+        project.setProjectid(resultSet.getInt("projectid"));
+        project.setTitel(resultSet.getString("titel"));
+        project.setAangemeld(resultSet.getDate("aangemeld"));
+        project.setBeschrijving(resultSet.getString("beschrijving"));
+        project.setDoelbedrag(resultSet.getBigDecimal("doelbedrag"));
+        project.setOpentijd(resultSet.getInt("opentijd"));
+        project.setRentepercentage(resultSet.getBigDecimal("rentepercentage"));
+        project.setRisicoprofiel(resultSet.getInt("risicoprofiel"));
+        project.setEigenaar(resultSet.getInt("eigenaar"));
+        project.setStatus(ProjectStatus.fromValue(resultSet.getString("status")));
+        return project;
     }
 
 }

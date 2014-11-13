@@ -2,6 +2,7 @@ package nl.ing.crowdfunding.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,29 +28,7 @@ public class KlantRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-            	
-            	Klant klant = new Klant();
-                klant.setKlantid(resultSet.getInt("klantid"));
-                klant.setAchternaam(resultSet.getString("achternaam"));
-                klant.setContract(resultSet.getString("contract"));
-                klant.setCreditoriban(resultSet.getString("creditoriban"));
-                klant.setDebtoriban(resultSet.getString("debtoriban"));
-                klant.setEmail(resultSet.getString("email"));
-                klant.setGeboortedag(resultSet
-                        .getDate("geboortedag"));
-                klant.setHuisnummer(resultSet.getInt("huisnummer"));
-                klant.setHuisnummerav(resultSet.getString("huisnummerav"));
-                klant.setIngklant(resultSet.getBoolean("ingklant"));
-                klant.setPlaats(resultSet.getString("plaats"));
-                klant.setStraatnaam(resultSet.getString("straatnaam"));
-                klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
-                klant.setTelefoonnummermobiel(resultSet.getString("telefoonnummermobiel"));
-                klant.setTelefoonnummersms(resultSet.getString("telefoonnummersms"));
-                klant.setTussenvoegsels(resultSet.getString("tussenvoegsels"));
-                klant.setVoornaam(resultSet.getString("voornaam"));
-                klant.setPostcode(resultSet.getString("postcode"));
-                klant.setAuthtoken(resultSet.getString("authtoken"));
-                klant.setPassword(resultSet.getString("password"));
+            	Klant klant = resultSetToKlant(resultSet);
                 klantLijst.add(klant);
             }
         } catch (Exception e) {
@@ -57,10 +36,9 @@ public class KlantRepository {
         }
         return klantLijst;
     }
-    
-    
+
     public Klant find(String id) {
-        Klant klant = new Klant();
+        Klant klant = null;
         try {
             Connection connection = ConnectionUtils.getConnection();
 
@@ -70,27 +48,7 @@ public class KlantRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                klant.setKlantid(resultSet.getInt("klantid"));
-                klant.setAchternaam(resultSet.getString("achternaam"));
-                klant.setContract(resultSet.getString("contract"));
-                klant.setCreditoriban(resultSet.getString("creditoriban"));
-                klant.setDebtoriban(resultSet.getString("debtoriban"));
-                klant.setEmail(resultSet.getString("email"));
-                klant.setGeboortedag(resultSet
-                        .getDate("geboortedag"));
-                klant.setHuisnummer(resultSet.getInt("huisnummer"));
-                klant.setHuisnummerav(resultSet.getString("huisnummerav"));
-                klant.setIngklant(resultSet.getBoolean("ingklant"));
-                klant.setPlaats(resultSet.getString("plaats"));
-                klant.setStraatnaam(resultSet.getString("straatnaam"));
-                klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
-                klant.setTelefoonnummermobiel(resultSet.getString("telefoonnummermobiel"));
-                klant.setTelefoonnummersms(resultSet.getString("telefoonnummersms"));
-                klant.setTussenvoegsels(resultSet.getString("tussenvoegsels"));
-                klant.setVoornaam(resultSet.getString("voornaam"));
-                klant.setPostcode(resultSet.getString("postcode"));
-                klant.setAuthtoken(resultSet.getString("authtoken"));
-                klant.setPassword(resultSet.getString("password"));
+                klant = resultSetToKlant(resultSet);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -197,6 +155,32 @@ public class KlantRepository {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private Klant resultSetToKlant(ResultSet resultSet) throws SQLException {
+        Klant klant = new Klant();
+        klant.setKlantid(resultSet.getInt("klantid"));
+        klant.setAchternaam(resultSet.getString("achternaam"));
+        klant.setContract(resultSet.getString("contract"));
+        klant.setCreditoriban(resultSet.getString("creditoriban"));
+        klant.setDebtoriban(resultSet.getString("debtoriban"));
+        klant.setEmail(resultSet.getString("email"));
+        klant.setGeboortedag(resultSet
+                .getDate("geboortedag"));
+        klant.setHuisnummer(resultSet.getInt("huisnummer"));
+        klant.setHuisnummerav(resultSet.getString("huisnummerav"));
+        klant.setIngklant(resultSet.getBoolean("ingklant"));
+        klant.setPlaats(resultSet.getString("plaats"));
+        klant.setStraatnaam(resultSet.getString("straatnaam"));
+        klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
+        klant.setTelefoonnummermobiel(resultSet.getString("telefoonnummermobiel"));
+        klant.setTelefoonnummersms(resultSet.getString("telefoonnummersms"));
+        klant.setTussenvoegsels(resultSet.getString("tussenvoegsels"));
+        klant.setVoornaam(resultSet.getString("voornaam"));
+        klant.setPostcode(resultSet.getString("postcode"));
+        klant.setAuthtoken(resultSet.getString("authtoken"));
+        klant.setPassword(resultSet.getString("password"));
+        return klant;
     }
 
 }
