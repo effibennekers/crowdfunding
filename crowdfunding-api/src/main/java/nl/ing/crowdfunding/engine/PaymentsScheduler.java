@@ -8,8 +8,6 @@ import nl.ing.crowdfunding.service.AfbetalingService;
 import nl.ing.crowdfunding.service.CommonAPIConnectionService;
 import nl.ing.crowdfunding.service.InvesteringService;
 import nl.ing.crowdfunding.service.ProjectService;
-import org.apache.http.client.utils.DateUtils;
-import org.springframework.format.datetime.joda.JodaTimeContext;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.annotation.Resource;
@@ -32,7 +30,7 @@ public class PaymentsScheduler {
     @Resource
     ProjectService ps;
 
-    @Scheduled(fixedDelay=60000*5)
+    @Scheduled(fixedDelay = 60000 * 5)
     public void runPayments() {
 
         List<Project> projects = ps.getAll();
@@ -66,7 +64,6 @@ public class PaymentsScheduler {
 
         if ("loopt".equals(p.getStatus())) {
             List<String> candidates = p.getInvesteringIds();
-
 
 
             for (String id : candidates) {

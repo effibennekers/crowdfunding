@@ -1,7 +1,7 @@
 package nl.ing.crowdfunding.dao;
 
 import com.mysql.jdbc.PreparedStatement;
-import nl.ing.crowdfunding.domain.*;
+import nl.ing.crowdfunding.domain.Afbetaling;
 import nl.ing.crowdfunding.util.ConnectionUtils;
 import org.springframework.stereotype.Repository;
 

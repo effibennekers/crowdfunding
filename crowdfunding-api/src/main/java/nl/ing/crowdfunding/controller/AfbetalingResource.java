@@ -1,21 +1,14 @@
 package nl.ing.crowdfunding.controller;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import nl.ing.crowdfunding.domain.Afbetaling;
 import nl.ing.crowdfunding.service.AfbetalingService;
 import nl.ing.crowdfunding.util.ResourceUtil;
+
+import javax.annotation.Resource;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/afbetalingen")
 public class AfbetalingResource {

@@ -1,24 +1,15 @@
 package nl.ing.crowdfunding.controller;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import nl.ing.crowdfunding.domain.Investering;
 import nl.ing.crowdfunding.domain.Project;
 import nl.ing.crowdfunding.service.ProjectService;
 import nl.ing.crowdfunding.util.ResourceUtil;
-
 import org.springframework.stereotype.Controller;
+
+import javax.annotation.Resource;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/projecten")
 @Controller
@@ -39,12 +30,12 @@ public class ProjectResource {
     public Project get(@PathParam("id") String id) {
         return projectService.getById(id);
     }
-    
+
     @Path("/klant/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Project> getByKlantId(@PathParam("id") String klantId) {
-    	return projectService.getByKlantId(klantId);
+        return projectService.getByKlantId(klantId);
     }
 
     @PUT

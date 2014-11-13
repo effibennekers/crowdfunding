@@ -5,15 +5,21 @@ package nl.ing.crowdfunding.domain;
  */
 public enum ProjectStatus {
     bouw, open, loopt, gestopt, afgerond;
-    
+
     public static ProjectStatus fromValue(String strStatus) {
-    	switch (strStatus) {
-    	case "bouw": return bouw;
-    	case "open": return open;
-    	case "loopt": return loopt;
-    	case "gestopt": return gestopt;
-    	case "afgerond": return afgerond;
-    	default: return bouw;
-    	}
+        switch (strStatus) {
+            case "bouw":
+                return bouw;
+            case "open":
+                return open;
+            case "loopt":
+                return loopt;
+            case "gestopt":
+                return gestopt;
+            case "afgerond":
+                return afgerond;
+            default:
+                return bouw;
+        }
     }
 }

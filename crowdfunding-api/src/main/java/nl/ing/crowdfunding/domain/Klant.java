@@ -1,7 +1,5 @@
 package nl.ing.crowdfunding.domain;
 
-import org.springframework.util.StringUtils;
-
 import java.util.Date;
 
 /**

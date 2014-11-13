@@ -43,50 +43,49 @@ package nl.ing.crowdfunding.domain.ing.common;
  */
 public class Transfer {
 
-  private String fromAccount;
-  private String toAccount;
+    private String fromAccount;
+    private String toAccount;
+    private String toName;
+    private String amount;
 
-  public Transfer(String fromAccount, String amount, String toAccount, String toName) {
-    this.fromAccount = fromAccount;
-    this.toAccount = toAccount;
-    this.toName = toName;
-    this.amount = amount;
-  }
+    public Transfer(String fromAccount, String amount, String toAccount, String toName) {
+        this.fromAccount = fromAccount;
+        this.toAccount = toAccount;
+        this.toName = toName;
+        this.amount = amount;
+    }
 
-  public String getFromAccount() {
-    return fromAccount;
-  }
+    public String getFromAccount() {
+        return fromAccount;
+    }
 
-  public void setFromAccount(String fromAccount) {
-    this.fromAccount = fromAccount;
-  }
+    public void setFromAccount(String fromAccount) {
+        this.fromAccount = fromAccount;
+    }
 
-  public String getToAccount() {
-    return toAccount;
-  }
+    public String getToAccount() {
+        return toAccount;
+    }
 
-  public void setToAccount(String toAccount) {
-    this.toAccount = toAccount;
-  }
+    public void setToAccount(String toAccount) {
+        this.toAccount = toAccount;
+    }
 
-  public String getToName() {
-    return toName;
-  }
+    public String getToName() {
+        return toName;
+    }
 
-  public void setToName(String toName) {
-    this.toName = toName;
-  }
+    public void setToName(String toName) {
+        this.toName = toName;
+    }
 
-  public String getAmount() {
-    return amount;
-  }
+    public String getAmount() {
+        return amount;
+    }
 
-  public void setAmount(String amount) {
-    this.amount = amount;
-  }
-
-  private String toName;
-  private String amount;
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 
 
 }

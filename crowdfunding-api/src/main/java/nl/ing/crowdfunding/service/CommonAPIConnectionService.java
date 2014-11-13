@@ -140,7 +140,7 @@ public class CommonAPIConnectionService {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readValue(response.getEntity().getContent(), JsonNode.class);
         result.addAll(node.findValuesAsText("id"));
-        
+
         return result;
     }
 }
