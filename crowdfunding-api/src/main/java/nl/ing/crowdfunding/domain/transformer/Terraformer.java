@@ -4,6 +4,7 @@ import nl.ing.crowdfunding.domain.Afbetaling;
 import nl.ing.crowdfunding.domain.Investering;
 import nl.ing.crowdfunding.domain.ing.common.Transfer;
 import nl.ing.crowdfunding.service.KlantService;
+import nl.ing.crowdfunding.service.ProjectService;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -16,8 +17,11 @@ public class Terraformer {
   @Resource
   static KlantService k;
 
+  @Resource
+  static ProjectService p;
+
   public static Transfer i2t(Investering i) {
-    return new Transfer(k.getById(Integer.toString(i.getProject().getEigenaar())).getDebtoriban(), String.valueOf(i.getBedrag()), i.getInvesteerder().getCreditoriban(), i.getInvesteerder().getAchternaam());
+    return new Transfer(k.getById(Integer.toString(p.getById(Integer.toString(i.getProject())).getEigenaar())).getDebtoriban(), String.valueOf(i.getBedrag()), k.getById(Integer.toString(i.getInvesteerder())).getCreditoriban(), k.getById(Integer.toString(i.getInvesteerder())).getAchternaam());
 
   }
 
@@ -26,7 +30,7 @@ public class Terraformer {
     a.setBedrag(i.getBedrag());
     a.setDatumtijd(new Date());
     a.setId(i.getAfbetalingen().size() + 1);
-    a.setInvestering(i);
+    a.setInvestering(i.getId());
 
     return a;
   }
