@@ -140,6 +140,7 @@ public class ProjectRepository {
         project.setRisicoprofiel(resultSet.getInt("risicoprofiel"));
         project.setEigenaar(resultSet.getInt("eigenaar"));
         project.setStatus(ProjectStatus.fromValue(resultSet.getString("status")));
+        project.setEigenaarrisicoprofiel(resultSet.getInt("eigenaarrisicoprofiel"));
         return project;
     }
 
