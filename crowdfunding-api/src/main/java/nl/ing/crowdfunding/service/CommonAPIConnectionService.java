@@ -1,9 +1,17 @@
 package nl.ing.crowdfunding.service;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Service;
 
-import java.io.DataOutputStream;
+import javax.ws.rs.core.MediaType;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -19,68 +27,62 @@ public class CommonAPIConnectionService {
 
   public static int doTransfer() throws Exception {
 
-    URL obj = new URL(TRANSFER_URL + "?" + "apikey=mfFhlcOcGwhPDDYrOBC3FgaBKe0cblQ5");
-    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+    HttpClient client = new DefaultHttpClient();
+    HttpPost post = new HttpPost(TRANSFER_URL + "?" + "apikey=mfFhlcOcGwhPDDYrOBC3FgaBKe0cblQ5");
 
-    con.setRequestMethod("POST");
-    con.setRequestProperty("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsImN0eSI6InRleHRcL3BsYWluIn0.eyJleHAiOjE0MTUwMzI5NjAsIm5vbmNlIjoiZjM1YTIyNzctMzQ5YS00OWFjLTlmODctM2Y1ZWQ2NGFmZGE5IiwiYXVkIjpbImNsaWVudF9pZCJdLCJpc3MiOiJVSUQxNTMwMSIsImp0aSI6IjE5Njg2ZWE5LTliNzQtNDRhMS1iZWUxLWI2MDEwMzdhZmY4NyIsImlhdCI6MTQxNTgxMDIxM30.-eiFNxfOiVoduApAHYjvQhOUDqrIpGSd6On-Fv1zbMc");
-    con.setRequestProperty("Content-Type", "application/json");
+    post.setHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsImN0eSI6InRleHRcL3BsYWluIn0.eyJleHAiOjE0MTUwMzI5NjAsIm5vbmNlIjoiZjM1YTIyNzctMzQ5YS00OWFjLTlmODctM2Y1ZWQ2NGFmZGE5IiwiYXVkIjpbImNsaWVudF9pZCJdLCJpc3MiOiJVSUQxNTMwMSIsImp0aSI6IjE5Njg2ZWE5LTliNzQtNDRhMS1iZWUxLWI2MDEwMzdhZmY4NyIsImlhdCI6MTQxNTgxMDIxM30.-eiFNxfOiVoduApAHYjvQhOUDqrIpGSd6On-Fv1zbMc");
+    post.setHeader("Content-Type", "application/json");
 
-    String query = "{" +
-      "  'sourceProductId' : 'NL49INGX0007174801'," +
-      "  'sourceProductIdentification' : 'NL49INGX0007174801'," +
-      "  'targetProductId' : 'T12365937'," +
-      "  'targetProductIdentification' : 'T12365937'," +
-      "  'targetCodeType' : {" +
-      "    'code' : 'SDA'," +
-      "    'label' : 'This is an account'" +
-      "  }," +
-      "  'targetCode' : 'T12365937'," +
-      "  'targetBICCode' : 'INGBNL2A'," +
-      "  'targetCustomerName' : 'Eric Manshande'," +
-      "  'amount' : {" +
-      "    'value' : 200," +
-      "    'currency' : {" +
-      "      'code' : 'EUR'," +
-      "      'label' : '€'" +
-      "    }" +
-      "  }," +
-      "  'commission' : {" +
-      "    'value' : 0," +
-      "    'currency' : {" +
-      "      'code' : 'EUR'," +
-      "      'label' : '€'" +
-      "    }" +
-      "  }," +
-      "  'executionDate' : {" +
-      "    'datetime' : '2014-11-13T00:00:00+01:00'" +
-      "  }," +
-      "  'transferType' : {" +
-      "    'code' : 'C2C'," +
-      "    'label' : ''" +
-      "  }," +
-      "  'description' : 'Payment reference #2'," +
-      "  'paymentReference' : 'Automatic payment'" +
+    String query = "{\n" +
+      "  \"sourceProductId\" : \"NL49INGX0007174801\",\n" +
+      "  \"sourceProductIdentification\" : \"NL49INGX0007174801\",\n" +
+      "  \"targetProductId\" : \"T12365937\",\n" +
+      "  \"targetProductIdentification\" : \"T12365937\",\n" +
+      "  \"targetCodeType\" : {\n" +
+      "    \"code\" : \"SDA\",\n" +
+      "    \"label\" : \"This is an account\"\n" +
+      "  },\n" +
+      "  \"targetCode\" : \"T12365937\",\n" +
+      "  \"targetBICCode\" : \"INGBNL2A\",\n" +
+      "  \"targetCustomerName\" : \"Eric Manshande\",\n" +
+      "  \"amount\" : {\n" +
+      "    \"value\" : 200,\n" +
+      "    \"currency\" : {\n" +
+      "      \"code\" : \"EUR\",\n" +
+      "      \"label\" : \"€\"\n" +
+      "    }\n" +
+      "  },\n" +
+      "  \"commission\" : {\n" +
+      "    \"value\" : 0,\n" +
+      "    \"currency\" : {\n" +
+      "      \"code\" : \"EUR\",\n" +
+      "      \"label\" : \"€\"\n" +
+      "    }\n" +
+      "  },\n" +
+      "  \"executionDate\" : {\n" +
+      "    \"datetime\" : \"2014-11-13T00:00:00+01:00\"\n" +
+      "  },\n" +
+      "  \"transferType\" : {\n" +
+      "    \"code\" : \"C2C\",\n" +
+      "    \"label\" : \"\"\n" +
+      "  },\n" +
+      "  \"description\" : \"Payment reference #2\",\n" +
+      "  \"paymentReference\" : \"Automatic payment\"\n" +
       "}";
 
 
-    con.setDoOutput(true);
+   post.setEntity( new ByteArrayEntity(query.getBytes("UTF-8")));
 
 
-    if (query != null) {
-      con.setRequestProperty("Content-Length", Integer.toString(query.length()));
-      con.getOutputStream().write(query.getBytes("UTF8"));
-    }
+  HttpResponse response = client.execute(post);
 
-    InputStream responseStream = con.getInputStream();
-    System.out.println(responseStream.read());
 
     ObjectMapper mapper = new ObjectMapper();
-    Map<String, Object> jsonMap = mapper.readValue(responseStream, Map.class);
-
+    Map<String, Object> jsonMap = mapper.readValue(response.getEntity().getContent(), Map.class);
 
     int[] responseCodeList = new int[4];
-    responseCodeList[0] = con.getResponseCode();
+
+    responseCodeList[0] = response.getStatusLine().getStatusCode();
 
     int responseCode = 200;
     for (int code : responseCodeList) {
@@ -90,6 +92,7 @@ public class CommonAPIConnectionService {
       }
     }
 
+    System.out.println(jsonMap);
 
     return responseCode;
   }
