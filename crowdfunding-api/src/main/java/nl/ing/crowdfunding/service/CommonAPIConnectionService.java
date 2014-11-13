@@ -1,13 +1,16 @@
 package nl.ing.crowdfunding.service;
 
+import nl.ing.crowdfunding.domain.ing.common.Transfer;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.BufferedHttpEntity;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Service;
-
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Map;
 
 /**
  * Created by Hans on 12-11-2014.
@@ -16,83 +19,108 @@ import java.util.Map;
 public class CommonAPIConnectionService {
 
   private static final String TRANSFER_URL = "http://ingcommonapi-test.apigee.net/commonapi/v0/NL/transfers";
+  private static CloseableHttpClient client = HttpClients.createDefault();
 
-  public static int doTransfer() throws Exception {
+  public static int doTransfer(Transfer mrT) throws Exception {
 
-    URL obj = new URL(TRANSFER_URL + "?" + "apikey=mfFhlcOcGwhPDDYrOBC3FgaBKe0cblQ5");
-    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-    con.setRequestMethod("POST");
-    con.setRequestProperty("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsImN0eSI6InRleHRcL3BsYWluIn0.eyJleHAiOjE0MTUwMzI5NjAsIm5vbmNlIjoiZjM1YTIyNzctMzQ5YS00OWFjLTlmODctM2Y1ZWQ2NGFmZGE5IiwiYXVkIjpbImNsaWVudF9pZCJdLCJpc3MiOiJVSUQxNTMwMSIsImp0aSI6IjE5Njg2ZWE5LTliNzQtNDRhMS1iZWUxLWI2MDEwMzdhZmY4NyIsImlhdCI6MTQxNTgxMDIxM30.-eiFNxfOiVoduApAHYjvQhOUDqrIpGSd6On-Fv1zbMc");
-    con.setRequestProperty("Content-Type", "application/json");
+    HttpPost post = new HttpPost(TRANSFER_URL + "?" + "apikey=mfFhlcOcGwhPDDYrOBC3FgaBKe0cblQ5");
 
-    String query = "{" +
-      "  'sourceProductId' : 'NL49INGX0007174801'," +
-      "  'sourceProductIdentification' : 'NL49INGX0007174801'," +
-      "  'targetProductId' : 'T12365937'," +
-      "  'targetProductIdentification' : 'T12365937'," +
-      "  'targetCodeType' : {" +
-      "    'code' : 'SDA'," +
-      "    'label' : 'This is an account'" +
-      "  }," +
-      "  'targetCode' : 'T12365937'," +
-      "  'targetBICCode' : 'INGBNL2A'," +
-      "  'targetCustomerName' : 'Eric Manshande'," +
-      "  'amount' : {" +
-      "    'value' : 200," +
-      "    'currency' : {" +
-      "      'code' : 'EUR'," +
-      "      'label' : '€'" +
-      "    }" +
-      "  }," +
-      "  'commission' : {" +
-      "    'value' : 0," +
-      "    'currency' : {" +
-      "      'code' : 'EUR'," +
-      "      'label' : '€'" +
-      "    }" +
-      "  }," +
-      "  'executionDate' : {" +
-      "    'datetime' : '2014-11-13T00:00:00+01:00'" +
-      "  }," +
-      "  'transferType' : {" +
-      "    'code' : 'C2C'," +
-      "    'label' : ''" +
-      "  }," +
-      "  'description' : 'Payment reference #2'," +
-      "  'paymentReference' : 'Automatic payment'" +
+    post.setHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsImN0eSI6InRleHRcL3BsYWluIn0.eyJleHAiOjE0MTUwMzI5NjAsIm5vbmNlIjoiZjM1YTIyNzctMzQ5YS00OWFjLTlmODctM2Y1ZWQ2NGFmZGE5IiwiYXVkIjpbImNsaWVudF9pZCJdLCJpc3MiOiJVSUQxNTMwMSIsImp0aSI6IjE5Njg2ZWE5LTliNzQtNDRhMS1iZWUxLWI2MDEwMzdhZmY4NyIsImlhdCI6MTQxNTgxMDIxM30.-eiFNxfOiVoduApAHYjvQhOUDqrIpGSd6On-Fv1zbMc");
+    post.setHeader("Content-Type", "application/json");
+
+    String query = paymentFormatter(mrT.getFromAccount(),mrT.getAmount(),mrT.getToAccount(),mrT.getToName());
+    System.out.println(query);
+
+    post.setEntity(new ByteArrayEntity(query.getBytes("UTF-8")));
+
+
+    HttpResponse response = client.execute(post);
+
+
+    return processOrder(response);
+  }
+
+  private static String paymentFormatter(String fromAccount, String amount, String toAccount, String toName) {
+
+    return
+    "{\n" +
+      "  \"sourceProductId\" : \""+ fromAccount + "\",\n" +
+      "  \"sourceProductIdentification\" : \"" + fromAccount + "\",\n" +
+      "  \"targetProductId\" : \"" + toAccount + "\",\n" +
+      "  \"targetProductIdentification\" : \""+ toAccount + "\",\n" +
+      "  \"targetCodeType\" : {\n" +
+      "    \"code\" : \"SDA\",\n" +
+      "    \"label\" : \"This is an account\"\n" +
+      "  },\n" +
+      "  \"targetCode\" : \"" + toAccount + "\",\n" +
+      "  \"targetBICCode\" : \"INGBNL2A\",\n" +
+      "  \"targetCustomerName\" : \"" + toName + "\",\n" +
+      "  \"amount\" : {\n" +
+      "    \"value\" : \"" + amount + "\",\n" +
+      "    \"currency\" : {\n" +
+      "      \"code\" : \"EUR\",\n" +
+      "      \"label\" : \"\"\n" +
+      "    }\n" +
+      "  },\n" +
+      "  \"commission\" : {\n" +
+      "    \"value\" : 0,\n" +
+      "    \"currency\" : {\n" +
+      "      \"code\" : \"EUR\",\n" +
+      "      \"label\" : \"\"\n" +
+      "    }\n" +
+      "  },\n" +
+      "  \"executionDate\" : {\n" +
+      "    \"datetime\" : \"2014-11-13T00:00:00\"\n" +
+      "  },\n" +
+      "  \"transferType\" : {\n" +
+      "    \"code\" : \"C2C\",\n" +
+      "    \"label\" : \"\"\n" +
+      "  },\n" +
+      "  \"description\" : \"Payment reference #2\",\n" +
+      "  \"paymentReference\" : \"Automatic payment\"\n" +
       "}";
 
 
-    con.setDoOutput(true);
-
-
-    if (query != null) {
-      con.setRequestProperty("Content-Length", Integer.toString(query.length()));
-      con.getOutputStream().write(query.getBytes("UTF8"));
-    }
-
-    InputStream responseStream = con.getInputStream();
-    System.out.println(responseStream.read());
-
-    ObjectMapper mapper = new ObjectMapper();
-    Map<String, Object> jsonMap = mapper.readValue(responseStream, Map.class);
-
-
-    int[] responseCodeList = new int[4];
-    responseCodeList[0] = con.getResponseCode();
-
-    int responseCode = 200;
-    for (int code : responseCodeList) {
-      if (code > responseCode) {
-        responseCode = code;
-        break;
-      }
-    }
-
-
-    return responseCode;
   }
 
+  private static int processOrder(HttpResponse order) throws Exception {
+    ObjectMapper mapper = new ObjectMapper();
 
+    int statusCode = order.getStatusLine().getStatusCode();
+    while (200 == statusCode) {
+
+      if (order.getEntity() != null) {
+        BufferedHttpEntity e = new BufferedHttpEntity(order.getEntity());
+
+        JsonNode initiateResult = mapper.readValue(e.getContent(), JsonNode.class);
+
+        JsonNode links = initiateResult.findValue("links");
+        System.out.println(links);
+        System.out.println(initiateResult);
+        for (JsonNode link : links) {
+          if ("signing_url".equals(link.findValuesAsText("rel").get(0)) || "execute_url".equals(link.findValuesAsText("rel").get(0))) {
+            String href = link.findValuesAsText("href").get(0);
+
+            HttpPut signRequest = new HttpPut("http://ingcommonapi-test.apigee.net/commonapi/v0/NL/" + href + "?" + "apikey=mfFhlcOcGwhPDDYrOBC3FgaBKe0cblQ5");
+            signRequest.setHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsImN0eSI6InRleHRcL3BsYWluIn0.eyJleHAiOjE0MTUwMzI5NjAsIm5vbmNlIjoiZjM1YTIyNzctMzQ5YS00OWFjLTlmODctM2Y1ZWQ2NGFmZGE5IiwiYXVkIjpbImNsaWVudF9pZCJdLCJpc3MiOiJVSUQxNTMwMSIsImp0aSI6IjE5Njg2ZWE5LTliNzQtNDRhMS1iZWUxLWI2MDEwMzdhZmY4NyIsImlhdCI6MTQxNTgxMDIxM30.-eiFNxfOiVoduApAHYjvQhOUDqrIpGSd6On-Fv1zbMc");
+            signRequest.setHeader("Content-Type", "application/json");
+
+            signRequest.setEntity(e);
+
+
+            HttpResponse response = client.execute(signRequest);
+
+
+            return processOrder(response);
+
+
+          }
+        }
+      }
+    }
+    return statusCode;
+
+  }
 }
+
