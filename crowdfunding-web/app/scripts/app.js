@@ -38,6 +38,10 @@ angular
         templateUrl: 'views/profiel.html',
         controller: 'ProfielCtrl'
       })
+        .when('/vragen', {
+          templateUrl: 'views/vragen.html',
+          controller: 'VragenCtrl'
+        })
       .otherwise({
         redirectTo: '/'
       });
