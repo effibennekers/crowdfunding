@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema version="1.0" targetNamespace="http://commonapi.icec.oib.ing.com/person" xmlns:cores="http://commonapi.icec.oib.ing.com/core" xmlns:persons="http://commonapi.icec.oib.ing.com/person" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://commonapi.icec.oib.ing.com/core" schemaLocation="cores.xsd"/>
+  <xs:element name="person" type="persons:person"/>
+  <xs:element name="personReference" type="persons:personReference"/>
+  <xs:element name="personReferenceList" type="persons:personReferenceList"/>
+  <xs:element name="quotePersonReference" type="persons:quotePersonReference"/>
+  <xs:element name="quotePersonReferenceList" type="persons:quotePersonReferenceList"/>
+  <xs:complexType name="person">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[The Person entity correspond to an existing human being who has any correlation
+of any kind with one or more products of a bank.<br>
+It is defined as simple as possible in order to make it general use and not
+country specific.<br>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cores:baseObjectWithID">
+        <xs:sequence>
+          <xs:element name="bankId" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The id of the bank by whom the person is managed.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="gender" type="cores:enumeratedValue" minOccurs="0"/>
+          <xs:element name="salutation" type="cores:enumeratedValue" minOccurs="0"/>
+          <xs:element name="name" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String containing all the name info of the person.<p>
+It's a concatenation of First Name and Family Name.<p>
+Must be defined the concatenation rules.
+Max 60 chars.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="birthDate" type="cores:ISO8601DateTime" minOccurs="0"/>
+          <xs:element name="residenceCountry" type="cores:enumeratedValue" minOccurs="0"/>
+          <xs:element name="phones" type="cores:phoneNumber" minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The list of phone number associated with the person.
+The list must exist but could be empty.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="emails" type="cores:emailAddress" minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The list of email addresses associated with the person.
+The list must exist but could be empty.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="addresses" type="cores:address" minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The list of addresses associated with the person.
+The list must exist but could be empty.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="personReference">
+    <xs:complexContent>
+      <xs:extension base="cores:referenceObjectID">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String containing all the name info of the person.
+Max 60 chars.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="roleType" type="cores:enumeratedValue" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The role of this reference.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="personReferenceList">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[List of PersonReference]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="list" type="persons:personReference" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A list of PersonReference.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="quotePersonReference">
+    <xs:complexContent>
+      <xs:extension base="cores:referenceObjectID">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String containing all the name info of the person.
+Max 60 chars.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="roleType" type="cores:enumeratedValue" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The role of this reference.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="quote" type="xs:double" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The quote of this person in the relation.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="quotePersonReferenceList">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[List of QuotePersonReference]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="list" type="persons:quotePersonReference" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A list of QuotePersonReference.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
