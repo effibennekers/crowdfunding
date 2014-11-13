@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h3>Vragen</h3>
+<table class="table table-striped table-hover ">
+    <thead>
+    <tr>
+        <th>Nummer</th>
+        <th>Onderwerp</th>
+        <th>Vraag</th>
+        <th>Antwoord</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="text-info" ng-repeat="vraag in vragen" track by $index>
+        <td>{{vraag.nr}}</td>
+        <td>{{vraag.onderwerp}}</td>
+        <td>{{vraag.vraag}}</td>
+        <td>
+            <div>
+                <button type="button" class="btm btn-info" data-toggle="collapse" data-target="#{{$index}}">Antwoord</button>
+            </div>
+        </td>
+        <td>
+            <div id="{{$index}}" class="collapse">
+                <hr>
+                <div>{{vraag.antwoord}}</div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
