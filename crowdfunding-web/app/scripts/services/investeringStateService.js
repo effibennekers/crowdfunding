@@ -14,7 +14,7 @@ angular.module('CrowdFundingApp')
                 "afbetaalperiode": betaalperiode
             };
 
-            return $http.post(' http://localhost:8080/rest/projecten ', postData);
+            return $http.put('http://localhost:8080/rest/investeringen', postData);
         }
 
         return {
