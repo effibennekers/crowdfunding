@@ -88,9 +88,7 @@ public class ProjectRepository {
 				buff.append(", doelbedrag=?");
 				buff.append(", opentijd=?");
 				buff.append(", rentepercentage=?");
-				buff.append(", risicoprofiel=?");
 				buff.append(", eigenaar=?");
-				buff.append(", eigenaarrisicoprofiel=?");
 				buff.append(", status=?");
 				buff.append("WHERE projectid=?");
 				
@@ -103,11 +101,9 @@ public class ProjectRepository {
                 preparedStatement.setBigDecimal(4, project.getDoelbedrag());
                 preparedStatement.setInt(5, project.getOpentijd());
                 preparedStatement.setBigDecimal(6, project.getRentepercentage());
-                preparedStatement.setInt(7, project.getRisicoprofiel());
-                preparedStatement.setInt(8, project.getEigenaar());  
-                preparedStatement.setInt(9, project.getEigenaarrisicoprofiel());
-                preparedStatement.setString(10, project.getStatus().name());
-                preparedStatement.setInt(11, project.getProjectid());
+                preparedStatement.setInt(7, project.getEigenaar());
+                preparedStatement.setString(8, project.getStatus().name());
+                preparedStatement.setInt(9, project.getProjectid());
                 preparedStatement.executeUpdate();
 			}
 		} catch (Exception e) {

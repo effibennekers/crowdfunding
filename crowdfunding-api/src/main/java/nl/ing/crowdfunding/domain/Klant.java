@@ -1,6 +1,7 @@
 package nl.ing.crowdfunding.domain;
 
-import java.math.BigInteger;
+import org.springframework.util.StringUtils;
+
 import java.util.Date;
 
 /**
@@ -188,4 +189,9 @@ public class Klant {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean isIngKlant() {
+        return "ja".equalsIgnoreCase(getIngklant());
+    }
+
 }
