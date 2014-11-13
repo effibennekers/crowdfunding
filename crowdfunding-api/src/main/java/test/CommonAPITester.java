@@ -26,4 +26,15 @@ public class CommonAPITester {
         }
 
     }
+
+    @Test
+    public void commonAPIAccountTest() {
+        try {
+            CommonAPIConnectionService.getAccountNumbers();
+
+        } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    }
 }
