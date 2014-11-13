@@ -6,11 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.ing.crowdfunding.domain.Afbetaling;
 import nl.ing.crowdfunding.domain.Investering;
 import nl.ing.crowdfunding.domain.InvesteringsStatus;
-import nl.ing.crowdfunding.domain.Project;
-import nl.ing.crowdfunding.domain.ProjectStatus;
 import nl.ing.crowdfunding.util.ConnectionUtils;
 
 import org.springframework.stereotype.Repository;
@@ -73,9 +70,33 @@ public class InvesteringRepository {
 		return investering;
     }
     
-//    public List<Investering> getAllByProjectid {
-//    	
-//    }
+    public List<Investering> findByProject(String projectId) {
+    	List<Investering> investeringList = new ArrayList<Investering>();
+    	try {
+            Connection connection = ConnectionUtils.getConnection();
+
+            PreparedStatement preparedStatement = (PreparedStatement) connection
+                    .prepareStatement("select * from crowdfunding.investering WHERE project=? ; ");
+            preparedStatement.setString(1, projectId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+            	Investering investering = new Investering();
+            	investering.setId(resultSet.getInt("investeringid"));
+				investering.setInvesteerder(resultSet.getInt("investeerder"));
+				investering.setBedrag(resultSet.getBigDecimal("bedrag"));
+				investering.setProject(resultSet.getInt("project"));
+				investering.setBeloning(resultSet.getString("beloning"));
+				investering.setRentepercentage(resultSet.getBigDecimal("rentepercentage"));
+				investering.setStatus(InvesteringsStatus.fromValue(resultSet.getString("status")));
+				investering.setAfbetaalperiode(resultSet.getInt("afbetaalperiode"));
+				investeringList.add(investering);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return investeringList;
+    }
 
     public void save(Investering investering) {
     	try {

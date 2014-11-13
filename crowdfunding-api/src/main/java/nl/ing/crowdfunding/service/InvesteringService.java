@@ -21,6 +21,10 @@ public class InvesteringService {
 	public Investering getById(String id) {
 		return investeringRepository.find(id);
 	}
+	
+	public List<Investering> getByProjectId(String projectId) {
+		return investeringRepository.findByProject(projectId);
+	}
 
 	public void deleteById(String id) {
         investeringRepository.delete(id);
