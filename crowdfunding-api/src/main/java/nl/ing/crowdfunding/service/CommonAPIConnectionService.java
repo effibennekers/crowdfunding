@@ -1,5 +1,6 @@
 package nl.ing.crowdfunding.service;
 
+import nl.ing.crowdfunding.domain.ing.common.Transfer;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -20,7 +21,7 @@ public class CommonAPIConnectionService {
   private static final String TRANSFER_URL = "http://ingcommonapi-test.apigee.net/commonapi/v0/NL/transfers";
   private static CloseableHttpClient client = HttpClients.createDefault();
 
-  public static int doTransfer() throws Exception {
+  public static int doTransfer(Transfer mrT) throws Exception {
 
 
     HttpPost post = new HttpPost(TRANSFER_URL + "?" + "apikey=mfFhlcOcGwhPDDYrOBC3FgaBKe0cblQ5");
@@ -28,20 +29,35 @@ public class CommonAPIConnectionService {
     post.setHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsImN0eSI6InRleHRcL3BsYWluIn0.eyJleHAiOjE0MTUwMzI5NjAsIm5vbmNlIjoiZjM1YTIyNzctMzQ5YS00OWFjLTlmODctM2Y1ZWQ2NGFmZGE5IiwiYXVkIjpbImNsaWVudF9pZCJdLCJpc3MiOiJVSUQxNTMwMSIsImp0aSI6IjE5Njg2ZWE5LTliNzQtNDRhMS1iZWUxLWI2MDEwMzdhZmY4NyIsImlhdCI6MTQxNTgxMDIxM30.-eiFNxfOiVoduApAHYjvQhOUDqrIpGSd6On-Fv1zbMc");
     post.setHeader("Content-Type", "application/json");
 
-    String query = "{\n" +
-      "  \"sourceProductId\" : \"NL49INGX0007174801\",\n" +
-      "  \"sourceProductIdentification\" : \"NL49INGX0007174801\",\n" +
-      "  \"targetProductId\" : \"NL93INGB0008425900\",\n" +
-      "  \"targetProductIdentification\" : \"NL93INGB0008425900\",\n" +
+    String query = paymentFormatter(mrT.getFromAccount(),mrT.getAmount(),mrT.getToAccount(),mrT.getToName());
+    System.out.println(query);
+
+    post.setEntity(new ByteArrayEntity(query.getBytes("UTF-8")));
+
+
+    HttpResponse response = client.execute(post);
+
+
+    return processOrder(response);
+  }
+
+  private static String paymentFormatter(String fromAccount, String amount, String toAccount, String toName) {
+
+    return
+    "{\n" +
+      "  \"sourceProductId\" : \""+ fromAccount + "\",\n" +
+      "  \"sourceProductIdentification\" : \"" + fromAccount + "\",\n" +
+      "  \"targetProductId\" : \"" + toAccount + "\",\n" +
+      "  \"targetProductIdentification\" : \""+ toAccount + "\",\n" +
       "  \"targetCodeType\" : {\n" +
       "    \"code\" : \"SDA\",\n" +
       "    \"label\" : \"This is an account\"\n" +
       "  },\n" +
-      "  \"targetCode\" : \"NL93INGB0008425900\",\n" +
+      "  \"targetCode\" : \"" + toAccount + "\",\n" +
       "  \"targetBICCode\" : \"INGBNL2A\",\n" +
-      "  \"targetCustomerName\" : \"Eric Manshande\",\n" +
+      "  \"targetCustomerName\" : \"" + toName + "\",\n" +
       "  \"amount\" : {\n" +
-      "    \"value\" : 200,\n" +
+      "    \"value\" : \"" + amount + "\",\n" +
       "    \"currency\" : {\n" +
       "      \"code\" : \"EUR\",\n" +
       "      \"label\" : \"\"\n" +
@@ -66,13 +82,6 @@ public class CommonAPIConnectionService {
       "}";
 
 
-    post.setEntity(new ByteArrayEntity(query.getBytes("UTF-8")));
-
-
-    HttpResponse response = client.execute(post);
-
-
-    return processOrder(response);
   }
 
   private static int processOrder(HttpResponse order) throws Exception {
