@@ -27,21 +27,25 @@ angular
         controller: 'ProjectenCtrl'
       })
       .when('/geldlenen', {
-            templateUrl: 'views/geldlenen_stap1.html',
-            controller: 'GeldLenen_stap1_Ctrl'
+        templateUrl: 'views/geldlenen.html',
+        controller: 'GeldLenenCtrl'
       })
       .when('/geldinvesteren', {
         templateUrl: 'views/geldinvesteren.html',
         controller: 'GeldInvesterenCtrl'
+      })
+      .when('/investeren', {
+        templateUrl: 'views/investeren.html',
+        controller: 'InvesterenCtrl'
       })
       .when('/profiel', {
         templateUrl: 'views/profiel.html',
         controller: 'ProfielCtrl'
       })
       .when('/vragen', {
-        templateUrl: 'views/vragen.html',
-        controller: 'VragenCtrl'
-      })
+      templateUrl: 'views/vragen.html',
+      controller: 'VragenCtrl'
+    })
       .otherwise({
         redirectTo: '/'
       });
