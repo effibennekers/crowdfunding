@@ -15,7 +15,7 @@ public class AfbetalingService {
 	private AfbetalingRepository afbetalingRepository = new AfbetalingRepository();
 
     public List<Afbetaling> getAll() {
-        return null;
+        return afbetalingRepository.getAll();
     }
 
 	public Afbetaling getById(String id) {

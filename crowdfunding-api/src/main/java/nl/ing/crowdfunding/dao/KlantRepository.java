@@ -43,32 +43,11 @@ public class KlantRepository {
             Connection connection = ConnectionUtils.getConnection();
 
             PreparedStatement preparedStatement = (PreparedStatement) connection
-                    .prepareStatement("select * from crowdfunding.klant where klantid= ? ; ");
+                    .prepareStatement("select * from crowdfunding.klant where klantid= ?;");
             preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                klant.setKlantid(resultSet.getInt("klantid"));
-                klant.setAchternaam(resultSet.getString("achternaam"));
-                klant.setContract(resultSet.getString("contract"));
-                klant.setCreditoriban(resultSet.getString("creditoriban"));
-                klant.setDebtoriban(resultSet.getString("debtoriban"));
-                klant.setEmail(resultSet.getString("email"));
-                klant.setGeboortedag(resultSet
-                        .getDate("geboortedag"));
-                klant.setHuisnummer(resultSet.getInt("huisnummer"));
-                klant.setHuisnummerav(resultSet.getString("huisnummerav"));
-                klant.setIngklant(resultSet.getString("ingklant"));
-                klant.setPlaats(resultSet.getString("plaats"));
-                klant.setStraatnaam(resultSet.getString("straatnaam"));
-                klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
-                klant.setTelefoonnummermobiel(resultSet.getString("telefoonnummermobiel"));
-                klant.setTelefoonnummersms(resultSet.getString("telefoonnummersms"));
-                klant.setTussenvoegsels(resultSet.getString("tussenvoegsels"));
-                klant.setVoornaam(resultSet.getString("voornaam"));
-                klant.setPostcode(resultSet.getString("postcode"));
-                klant.setAuthtoken(resultSet.getString("authtoken"));
-                klant.setPassword(resultSet.getString("password"));
                 klant = resultSetToKlant(resultSet);
             }
         } catch (Exception e) {
@@ -79,38 +58,17 @@ public class KlantRepository {
 
 
     public Klant find(String email, String password) {
-        Klant klant = new Klant();
+        Klant klant = null;
         try {
             Connection connection = ConnectionUtils.getConnection();
 
             PreparedStatement preparedStatement = (PreparedStatement) connection
-                    .prepareStatement("select * from crowdfunding.klant where email= ? and password= ? ; ");
+                    .prepareStatement("select * from crowdfunding.klant where email= ? and password= ?;");
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                klant.setKlantid(resultSet.getInt("klantid"));
-                klant.setAchternaam(resultSet.getString("achternaam"));
-                klant.setContract(resultSet.getString("contract"));
-                klant.setCreditoriban(resultSet.getString("creditoriban"));
-                klant.setDebtoriban(resultSet.getString("debtoriban"));
-                klant.setEmail(resultSet.getString("email"));
-                klant.setGeboortedag(resultSet
-                        .getDate("geboortedag"));
-                klant.setHuisnummer(resultSet.getInt("huisnummer"));
-                klant.setHuisnummerav(resultSet.getString("huisnummerav"));
-                klant.setIngklant(resultSet.getString("ingklant"));
-                klant.setPlaats(resultSet.getString("plaats"));
-                klant.setStraatnaam(resultSet.getString("straatnaam"));
-                klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
-                klant.setTelefoonnummermobiel(resultSet.getString("telefoonnummermobiel"));
-                klant.setTelefoonnummersms(resultSet.getString("telefoonnummersms"));
-                klant.setTussenvoegsels(resultSet.getString("tussenvoegsels"));
-                klant.setVoornaam(resultSet.getString("voornaam"));
-                klant.setPostcode(resultSet.getString("postcode"));
-                klant.setAuthtoken(resultSet.getString("authtoken"));
-                klant.setPassword(resultSet.getString("password"));
                 klant = resultSetToKlant(resultSet);
             }
         } catch (Exception e) {

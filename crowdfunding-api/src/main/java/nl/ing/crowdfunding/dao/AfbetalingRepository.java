@@ -1,12 +1,11 @@
 package nl.ing.crowdfunding.dao;
 
 import com.mysql.jdbc.PreparedStatement;
-import nl.ing.crowdfunding.domain.Afbetaling;
-import nl.ing.crowdfunding.domain.Project;
-import nl.ing.crowdfunding.domain.ProjectStatus;
+import nl.ing.crowdfunding.domain.*;
 import nl.ing.crowdfunding.util.ConnectionUtils;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,12 +22,11 @@ public class AfbetalingRepository {
             Connection connection = ConnectionUtils.getConnection();
 
             PreparedStatement preparedStatement = (PreparedStatement) connection
-                    .prepareStatement("select * from crowdfunding.afbetalingen;");
+                    .prepareStatement("select * from crowdfunding.afbetaling;");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Afbetaling afbetaling = resultSetToAfbetaling(resultSet);
-                afbetalingen.add(afbetaling);
+                afbetalingen.add(resultSetToAfbetaling(resultSet));
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -37,8 +35,21 @@ public class AfbetalingRepository {
     }
 
     public Afbetaling find(String id) {
-        Afbetaling afbetaling = new Afbetaling();
-        afbetaling.setDatumtijd(new Date());
+        Afbetaling afbetaling = null;
+        try {
+            Connection connection = ConnectionUtils.getConnection();
+
+            PreparedStatement preparedStatement = (PreparedStatement) connection
+                    .prepareStatement("select * from crowdfunding.investering where id= ? ; ");
+            preparedStatement.setString(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                afbetaling = resultSetToAfbetaling(resultSet);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return afbetaling;
     }
 
@@ -77,15 +88,24 @@ public class AfbetalingRepository {
     }
 
     public void delete(String id) {
-        //TODO
+        try {
+            Connection connection = ConnectionUtils.getConnection();
+
+            PreparedStatement preparedStatement = (PreparedStatement) connection
+                    .prepareStatement("delete from crowdfunding.project where projectid= ? ; ");
+            preparedStatement.setBigDecimal(1, new BigDecimal(id));
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private Afbetaling resultSetToAfbetaling(ResultSet resultSet) throws SQLException {
         Afbetaling afbetaling = new Afbetaling();
         afbetaling.setDatumtijd(resultSet.getDate("datumtijd"));
         afbetaling.setBedrag(resultSet.getBigDecimal("bedrag"));
-        afbetaling.setInvestering(resultSet.getInt("investeringid"));
-        afbetaling.setId(resultSet.getInt("investering"));
+        afbetaling.setInvestering(resultSet.getInt("investering"));
+        afbetaling.setId(resultSet.getInt("afbetalingid"));
         return afbetaling;
     }
 
