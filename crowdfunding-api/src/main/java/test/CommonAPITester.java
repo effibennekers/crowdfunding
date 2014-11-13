@@ -1,5 +1,6 @@
 package test;
 
+import nl.ing.crowdfunding.domain.ing.common.Transfer;
 import nl.ing.crowdfunding.service.CommonAPIConnectionService;
 import org.junit.Test;
 
@@ -12,7 +13,9 @@ public class CommonAPITester {
     @Test
     public void commonAPITest() {
         try {
-            int result = CommonAPIConnectionService.doTransfer();
+
+          Transfer transfer = new Transfer("NL49INGX0007174801","10","NL11INGB0005226376","Pipo");
+            int result = CommonAPIConnectionService.doTransfer(transfer);
             System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
