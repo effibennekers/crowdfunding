@@ -16,6 +16,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'uiSlider',
     'ui.bootstrap',
     'crowdfundingApp.filters',
     'crowdfundingApp.directives'
