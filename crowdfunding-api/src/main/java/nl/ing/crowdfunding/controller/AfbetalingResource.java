@@ -1,19 +1,18 @@
 package nl.ing.crowdfunding.controller;
 
+import nl.ing.crowdfunding.domain.Afbetaling;
+import nl.ing.crowdfunding.service.AfbetalingService;
+import nl.ing.crowdfunding.util.ResourceUtil;
+import org.springframework.stereotype.Controller;
+
 import javax.annotation.Resource;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import nl.ing.crowdfunding.domain.Afbetaling;
-import nl.ing.crowdfunding.service.AfbetalingService;
-import nl.ing.crowdfunding.util.ResourceUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
 import java.util.List;
 
 @Path("/afbetalingen")
+@Controller
 public class AfbetalingResource {
 
     @Resource

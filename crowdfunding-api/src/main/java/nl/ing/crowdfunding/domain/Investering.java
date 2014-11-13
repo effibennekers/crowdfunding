@@ -16,16 +16,15 @@ public class Investering {
     private BigDecimal rentepercentage;
     private InvesteringsStatus status;
     private int afbetaalperiode;
+    private List<Afbetaling> afbetalingen;
 
-  public List<Afbetaling> getAfbetalingen() {
-    return afbetalingen;
-  }
+    public List<Afbetaling> getAfbetalingen() {
+        return afbetalingen;
+    }
 
-  public void setAfbetalingen(List<Afbetaling> afbetalingen) {
-    this.afbetalingen = afbetalingen;
-  }
-
-  private List<Afbetaling> afbetalingen;
+    public void setAfbetalingen(List<Afbetaling> afbetalingen) {
+        this.afbetalingen = afbetalingen;
+    }
 
     public int getId() {
         return id;

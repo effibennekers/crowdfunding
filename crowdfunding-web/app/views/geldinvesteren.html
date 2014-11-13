@@ -1,122 +1,135 @@
 <div>
-  <div class="row">
-    <div class="col-xs-3"></div>
-    <div class="col-xs-9">
-      <form class="form-horizontal">
-        <fieldset>
-          <div class="form-group">
-            <div class="col-xs-0">
-            </div>
-            <div class="col-xs-12">
-              <input type="text" class="form-control" id="inputEmail" placeholder="Zoeken">
-            </div>
-          </div>
-        </fieldset>
-      </form>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-3">
-      <ul class="list-group">
-        <li class="list-group-item">
-          <label>Risico profiel</label>
-          <select class="form-control" id="select">
-            <option>tortor felis</option>
-            <option>pellentesque</option>
-            <option>imperdiet</option>
-          </select>
-        </li>
-        <li class="list-group-item">
-          <label>Categorie</label>
-          <select class="form-control" id="select">
-            <option>tortor felis</option>
-            <option>pellentesque</option>
-            <option>imperdiet</option>
-          </select>
-        </li>
-        <li class="list-group-item">
-          <label>Slider rentepercentage</label>
-        </li>
-        <li class="list-group-item">
-          <label>Slider totaal bedrag</label>
-        </li>
-      </ul>
-    </div>
-    <div class="col-xs-9">
-      <div ng-repeat="investering in investeringen">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">{{investering.titel}}</h3>
-          </div>
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-xs-4">
-                <strong>Rentepercentage</strong> {{investering.rentepercentage}}%
-              </div>
-              <div class="col-xs-4">
-                <strong>Dagen nog open</strong> {{investering.opentijd}}
-              </div>
-              <div class="col-xs-4">
-                <strong>Doel</strong> € {{investering.doelbedrag}}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-4">
-                <strong>Risicoprofiel</strong> {{investering.risicoprofiel}}
-              </div>
-              <div class="col-xs-4">
-                <strong>Status</strong>
-                {{investering.status}}
-              </div>
-              <div class="col-xs-4" ng-hide="investering.hideDetails">
-                <button type="button" class="btn btn-primary" ng-click="openProjectDetail($index)">
-                  Open details
-                </button>
-              </div>
-            </div>
-            <div ng-if="investering.hideDetails">
-              <div class="row">
-                <div class="col-xs-4">
-                  <strong>Naam</strong> {{investering.voornaam}} {{investering.tussenvoegsels}}
-                  {{investering.achternaam}}
-                </div>
-                <div class="col-xs-4">
-                  <strong>Aangemeld</strong> {{investering.aangemeld}}
-                </div>
-                <div class="col-xs-4">
-                  <strong>Verzameld bedrag</strong> {{investering.bereiktbedrag}}
-                  <div class="progress progress-striped active">
-                    <div class="progress-bar" ng-class="investering.progressbar"
-                         style="{{getProgressBarWidth($index)}}"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-8">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sollicitudin, ex eget
-                    vulputate finibus, elit dolor egestas leo, in imperdiet ligula libero nec justo.
-                    Cras
-                    eros nisl, porta et feugiat id, lobortis nec lectus. Sed ut enim at</p>
-                </div>
-
-              </div>
-            </div>
-            <div class="row" ng-show="investering.hideDetails">
-              <div class="col-xs-8">
-                <button type="button" class="btn btn-primary" ng-click="openInvestering($index)">
-                  Investeren
-                </button>
-              </div>
-              <div class="col-xs-4">
-                <button type="button" class="btn btn-primary" ng-click="openProjectDetail($index)">
-                  Sluit details
-                </button>
-              </div>
-            </div>
-          </div>
+    <div class="row">
+        <div class="col-xs-3"></div>
+        <div class="col-xs-9">
+            <form class="form-horizontal">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-xs-0">
+                        </div>
+                        <div class="col-xs-12">
+                            <input type="text" class="form-control" ng-model="zoeken" placeholder="Zoeken">
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
         </div>
-      </div>
-
     </div>
-  </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <label>Risico profiel</label>
+                    <select class="form-control" ng-model="risicoprofiel" id="selectRisicoProfiel">
+                        <option selected value="">Alles</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </li>
+                <li class="list-group-item">
+                    <label>Status</label>
+                    <select class="form-control" id="selectStatus" ng-model="status">
+                        <option value="" selected>Alles</option>
+                        <option value="Bouw">Bouw</option>
+                        <option value="Open" selected>Open</option>
+                        <option value="Loopt">Loopt</option>
+                        <option value="Afgerond">Afgerond</option>
+                    </select>
+                </li>
+                <li class="list-group-item">
+                    <strong>Rentepercentage</strong> {{rentepercentage}}
+                    <slider floor="1" ceiling="9" ng-model="rentepercentage"></slider>
+                </li>
+                <li class="list-group-item">
+                    <strong>Maximaal bedrag </strong> {{bedrag}}
+                    <slider floor="1000" ceiling="50000" step="500" ng-model="bedrag"></slider>
+
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-9">
+            <div ng-repeat="investering in investeringen  | filter:zoeken | filter: { status: status } | filter: { risicoprofiel: risicoprofiel } | rentepercentagefilter:rentepercentage | maximaalbedragfilter:bedrag">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{investering.titel}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Rentepercentage</strong> {{investering.rentepercentage}}%
+                            </div>
+                            <div class="col-xs-4">
+                                <strong>Dagen nog open</strong> {{investering.opentijd}}
+                            </div>
+                            <div class="col-xs-4">
+                                <strong>Doel</strong> € {{investering.doelbedrag}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Risicoprofiel</strong> {{investering.risicoprofiel}}
+                            </div>
+                            <div class="col-xs-4">
+                                <strong>Status</strong>
+                                {{investering.status}}
+                            </div>
+                            <div class="col-xs-4" ng-hide="investering.hideDetails">
+                                <button type="button" class="btn btn-primary" ng-click="openProjectDetail($index)">
+                                    Open details
+                                </button>
+                            </div>
+                        </div>
+                        <div ng-if="investering.hideDetails">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <strong>Naam</strong> {{investering.voornaam}} {{investering.tussenvoegsels}}
+                                    {{investering.achternaam}}
+                                </div>
+                                <div class="col-xs-4">
+                                    <strong>Aangemeld</strong> {{investering.aangemeld}}
+                                </div>
+                                <div class="col-xs-4">
+                                    <strong>Verzameld bedrag</strong> {{investering.bereiktbedrag}}
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar" ng-class="investering.progressbar"
+                                             style="{{getProgressBarWidth($index)}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sollicitudin, ex eget
+                                        vulputate finibus, elit dolor egestas leo, in imperdiet ligula libero nec justo.
+                                        Cras
+                                        eros nisl, porta et feugiat id, lobortis nec lectus. Sed ut enim at</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row" ng-show="investering.hideDetails">
+                            <div class="col-xs-8">
+                                <button type="button" class="btn btn-primary" ng-click="openInvestering($index)">
+                                    Investeren
+                                </button>
+                            </div>
+                            <div class="col-xs-4">
+                                <button type="button" class="btn btn-primary" ng-click="openProjectDetail($index)">
+                                    Sluit details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>

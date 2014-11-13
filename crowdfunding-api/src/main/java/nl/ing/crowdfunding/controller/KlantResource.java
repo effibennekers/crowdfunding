@@ -1,6 +1,5 @@
 package nl.ing.crowdfunding.controller;
 
-import nl.ing.crowdfunding.domain.Investering;
 import nl.ing.crowdfunding.domain.Klant;
 import nl.ing.crowdfunding.service.KlantService;
 import nl.ing.crowdfunding.util.ResourceUtil;
@@ -13,6 +12,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/klanten")
+@Controller
 public class KlantResource {
 
     @Resource

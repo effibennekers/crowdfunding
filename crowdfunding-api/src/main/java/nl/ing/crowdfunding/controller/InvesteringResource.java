@@ -1,6 +1,5 @@
 package nl.ing.crowdfunding.controller;
 
-import nl.ing.crowdfunding.domain.Afbetaling;
 import nl.ing.crowdfunding.domain.Investering;
 import nl.ing.crowdfunding.service.InvesteringService;
 import nl.ing.crowdfunding.util.ResourceUtil;
@@ -13,6 +12,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/investeringen")
+@Controller
 public class InvesteringResource {
 
     @Resource
@@ -29,6 +29,13 @@ public class InvesteringResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Investering get(@PathParam("id") String id) {
         return investeringService.getById(id);
+    }
+
+    @Path("/project/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Investering> getByProjectId(@PathParam("id") String projectId) {
+        return investeringService.getByProjectId(projectId);
     }
 
     @PUT

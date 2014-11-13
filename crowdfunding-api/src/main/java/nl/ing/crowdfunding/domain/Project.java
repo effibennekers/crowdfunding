@@ -20,19 +20,33 @@ public class Project {
     private int eigenaar;
     private int eigenaarrisicoprofiel;
     private ProjectStatus status;
+    private ArrayList<String> investeringIds;
+    private String naam;
+    private String bereiktBedrag;
 
-  public ArrayList<String> getInvesteringIds() {
-    return investeringIds;
-  }
+    public String getNaam() {
+        return naam;
+    }
 
-  public void setInvesteringIds(ArrayList<String> investeringIds) {
-    this.investeringIds = investeringIds;
-  }
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
 
+    public String getBereiktBedrag() {
+        return bereiktBedrag;
+    }
 
+    public void setBereiktBedrag(String bereiktBedrag) {
+        this.bereiktBedrag = bereiktBedrag;
+    }
 
-  private ArrayList<String> investeringIds;
+    public ArrayList<String> getInvesteringIds() {
+        return investeringIds;
+    }
 
+    public void setInvesteringIds(ArrayList<String> investeringIds) {
+        this.investeringIds = investeringIds;
+    }
 
     public int getProjectid() {
         return projectid;
@@ -43,14 +57,14 @@ public class Project {
     }
 
     public String getTitel() {
-		return titel;
-	}
+        return titel;
+    }
 
-	public void setTitel(String titel) {
-		this.titel = titel;
-	}
+    public void setTitel(String titel) {
+        this.titel = titel;
+    }
 
-	public Date getAangemeld() {
+    public Date getAangemeld() {
         return aangemeld;
     }
 
@@ -107,14 +121,14 @@ public class Project {
     }
 
     public int getEigenaarrisicoprofiel() {
-		return eigenaarrisicoprofiel;
-	}
+        return eigenaarrisicoprofiel;
+    }
 
-	public void setEigenaarrisicoprofiel(int eigenaarrisicoprofiel) {
-		this.eigenaarrisicoprofiel = eigenaarrisicoprofiel;
-	}
+    public void setEigenaarrisicoprofiel(int eigenaarrisicoprofiel) {
+        this.eigenaarrisicoprofiel = eigenaarrisicoprofiel;
+    }
 
-	public ProjectStatus getStatus() {
+    public ProjectStatus getStatus() {
         return status;
     }
 
@@ -122,5 +136,7 @@ public class Project {
         this.status = status;
     }
 
-
+    public boolean isNieuw() {
+        return getProjectid() == 0;
+    }
 }
