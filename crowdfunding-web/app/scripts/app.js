@@ -33,8 +33,12 @@ angular
       .when('/geldinvesteren', {
         templateUrl: 'views/geldinvesteren.html',
         controller: 'GeldInvesterenCtrl'
-      })
-      .when('/investeren', {
+      }).
+        when('/mijninvesteringen', {
+
+        templateUrl: 'views/mijninvesteringen.html',
+            controller: 'MijnInvesterenCtrl'
+    }).when('/investeren', {
         templateUrl: 'views/investeren.html',
         controller: 'InvesterenCtrl'
       })
