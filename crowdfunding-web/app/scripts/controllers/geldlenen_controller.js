@@ -47,16 +47,10 @@ angular.module('CrowdFundingApp')
 
             if (email != undefined && password != undefined && voornaam != undefined && achternaam != undefined && straatnaam != undefined && postcode != undefined && plaats != undefined) {
 
-
                 $http.put('http://localhost:8080/rest/klanten', {'email': email, 'password': password, 'voornaam': voornaam, 'achternaam': achternaam, 'straatnaam': straatnaam, 'huisnummer': nr, 'plaats': plaats, 'debtoriban': debrek, 'creditoriban': ingrek, 'telefoonnummer': tel, 'postcode': postcode, 'geboortedag': geb, 'ingklant': 'nee', 'contract': null, 'authtoken': null});
-
                 $scope.subscribe(true);
-
             }
-
-
         }
-
 
         $scope.login = {};
 
@@ -70,7 +64,6 @@ angular.module('CrowdFundingApp')
                 if(data.email == email && data.password == password) {
                     $scope.geldlenen_stap2();
                 }
-
 
             }).error(function () {
 
