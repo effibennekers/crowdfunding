@@ -9,7 +9,7 @@ import java.util.Date;
 public class Afbetaling {
 
     private int id;
-    private Investering investering;
+    private int investeringsid;
     private BigDecimal bedrag;
     private Date datumtijd;
 
@@ -21,12 +21,12 @@ public class Afbetaling {
         this.id = id;
     }
 
-    public Investering getInvestering() {
-        return investering;
+    public int getInvestering() {
+        return investeringsid;
     }
 
-    public void setInvestering(Investering investering) {
-        this.investering = investering;
+    public void setInvestering(int investeringsid) {
+        this.investeringsid = investeringsid;
     }
 
     public BigDecimal getBedrag() {

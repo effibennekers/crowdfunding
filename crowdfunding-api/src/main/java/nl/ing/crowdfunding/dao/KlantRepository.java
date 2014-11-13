@@ -1,21 +1,17 @@
 package nl.ing.crowdfunding.dao;
 
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import nl.ing.crowdfunding.domain.Investering;
 import nl.ing.crowdfunding.domain.Klant;
-import nl.ing.crowdfunding.domain.Project;
-import nl.ing.crowdfunding.domain.ProjectStatus;
 import nl.ing.crowdfunding.util.ConnectionUtils;
 
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import com.mysql.jdbc.PreparedStatement;
 
 @Repository
 public class KlantRepository {
@@ -32,29 +28,7 @@ public class KlantRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-            	
-            	Klant klant = new Klant();
-                klant.setKlantid(resultSet.getInt("klantid"));
-                klant.setAchternaam(resultSet.getString("achternaam"));
-                klant.setContract(resultSet.getString("contract"));
-                klant.setCreditoriban(resultSet.getString("creditoriban"));
-                klant.setDebtoriban(resultSet.getString("debtoriban"));
-                klant.setEmail(resultSet.getString("email"));
-                klant.setGeboortedag(resultSet
-                        .getDate("geboortedag"));
-                klant.setHuisnummer(resultSet.getInt("huisnummer"));
-                klant.setHuisnummerav(resultSet.getString("huisnummerav"));
-                klant.setIngklant(resultSet.getBoolean("ingklant"));
-                klant.setPlaats(resultSet.getString("plaats"));
-                klant.setStraatnaam(resultSet.getString("straatnaam"));
-                klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
-                klant.setTelefoonnummermobiel(resultSet.getString("telefoonnummermobiel"));
-                klant.setTelefoonnummersms(resultSet.getString("telefoonnummersms"));
-                klant.setTussenvoegsels(resultSet.getString("tussenvoegsels"));
-                klant.setVoornaam(resultSet.getString("voornaam"));
-                klant.setPostcode(resultSet.getString("postcode"));
-                klant.setAuthtoken(resultSet.getString("authtoken"));
-                klant.setPassword(resultSet.getString("password"));
+            	Klant klant = resultSetToKlant(resultSet);
                 klantLijst.add(klant);
             }
         } catch (Exception e) {
@@ -62,10 +36,9 @@ public class KlantRepository {
         }
         return klantLijst;
     }
-    
-    
+
     public Klant find(String id) {
-        Klant klant = new Klant();
+        Klant klant = null;
         try {
             Connection connection = ConnectionUtils.getConnection();
 
@@ -85,7 +58,7 @@ public class KlantRepository {
                         .getDate("geboortedag"));
                 klant.setHuisnummer(resultSet.getInt("huisnummer"));
                 klant.setHuisnummerav(resultSet.getString("huisnummerav"));
-                klant.setIngklant(resultSet.getBoolean("ingklant"));
+                klant.setIngklant(resultSet.getString("ingklant"));
                 klant.setPlaats(resultSet.getString("plaats"));
                 klant.setStraatnaam(resultSet.getString("straatnaam"));
                 klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
@@ -96,6 +69,49 @@ public class KlantRepository {
                 klant.setPostcode(resultSet.getString("postcode"));
                 klant.setAuthtoken(resultSet.getString("authtoken"));
                 klant.setPassword(resultSet.getString("password"));
+                klant = resultSetToKlant(resultSet);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return klant;
+    }
+
+
+    public Klant find(String email, String password) {
+        Klant klant = new Klant();
+        try {
+            Connection connection = ConnectionUtils.getConnection();
+
+            PreparedStatement preparedStatement = (PreparedStatement) connection
+                    .prepareStatement("select * from crowdfunding.klant where email= ? and password= ? ; ");
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                klant.setKlantid(resultSet.getInt("klantid"));
+                klant.setAchternaam(resultSet.getString("achternaam"));
+                klant.setContract(resultSet.getString("contract"));
+                klant.setCreditoriban(resultSet.getString("creditoriban"));
+                klant.setDebtoriban(resultSet.getString("debtoriban"));
+                klant.setEmail(resultSet.getString("email"));
+                klant.setGeboortedag(resultSet
+                        .getDate("geboortedag"));
+                klant.setHuisnummer(resultSet.getInt("huisnummer"));
+                klant.setHuisnummerav(resultSet.getString("huisnummerav"));
+                klant.setIngklant(resultSet.getString("ingklant"));
+                klant.setPlaats(resultSet.getString("plaats"));
+                klant.setStraatnaam(resultSet.getString("straatnaam"));
+                klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
+                klant.setTelefoonnummermobiel(resultSet.getString("telefoonnummermobiel"));
+                klant.setTelefoonnummersms(resultSet.getString("telefoonnummersms"));
+                klant.setTussenvoegsels(resultSet.getString("tussenvoegsels"));
+                klant.setVoornaam(resultSet.getString("voornaam"));
+                klant.setPostcode(resultSet.getString("postcode"));
+                klant.setAuthtoken(resultSet.getString("authtoken"));
+                klant.setPassword(resultSet.getString("password"));
+                klant = resultSetToKlant(resultSet);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -127,7 +143,7 @@ public class KlantRepository {
                 preparedStatement.setString(11, klant.getTelefoonnummersms());
                 preparedStatement.setString(12, klant.getTelefoonnummermobiel());
                 preparedStatement.setDate(13, new java.sql.Date(klant.getGeboortedag().getTime()));
-                preparedStatement.setBoolean(14, klant.getIngklant());
+                preparedStatement.setString(14, klant.getIngklant());
                 preparedStatement.setString(15, klant.getContract());
                 preparedStatement.setString(16, klant.getEmail());
                 preparedStatement.setString(17, klant.getPostcode());
@@ -175,13 +191,14 @@ public class KlantRepository {
                 preparedStatement.setString(11, klant.getTelefoonnummersms());
                 preparedStatement.setString(12, klant.getTelefoonnummermobiel());
                 preparedStatement.setDate(13, new java.sql.Date(klant.getGeboortedag().getTime()));
-                preparedStatement.setBoolean(14, klant.getIngklant());
+                preparedStatement.setString(14, klant.getIngklant());
                 preparedStatement.setString(15, klant.getContract());
                 preparedStatement.setString(16, klant.getEmail());
                 preparedStatement.setInt(17, klant.getKlantid());
                 preparedStatement.setString(18, klant.getPostcode());
                 preparedStatement.setString(19, klant.getAuthtoken());
                 preparedStatement.setString(20, klant.getPassword());
+                System.out.println(preparedStatement);
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
             }
@@ -202,6 +219,32 @@ public class KlantRepository {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private Klant resultSetToKlant(ResultSet resultSet) throws SQLException {
+        Klant klant = new Klant();
+        klant.setKlantid(resultSet.getInt("klantid"));
+        klant.setAchternaam(resultSet.getString("achternaam"));
+        klant.setContract(resultSet.getString("contract"));
+        klant.setCreditoriban(resultSet.getString("creditoriban"));
+        klant.setDebtoriban(resultSet.getString("debtoriban"));
+        klant.setEmail(resultSet.getString("email"));
+        klant.setGeboortedag(resultSet
+                .getDate("geboortedag"));
+        klant.setHuisnummer(resultSet.getInt("huisnummer"));
+        klant.setHuisnummerav(resultSet.getString("huisnummerav"));
+        klant.setIngklant(resultSet.getString("ingklant"));
+        klant.setPlaats(resultSet.getString("plaats"));
+        klant.setStraatnaam(resultSet.getString("straatnaam"));
+        klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
+        klant.setTelefoonnummermobiel(resultSet.getString("telefoonnummermobiel"));
+        klant.setTelefoonnummersms(resultSet.getString("telefoonnummersms"));
+        klant.setTussenvoegsels(resultSet.getString("tussenvoegsels"));
+        klant.setVoornaam(resultSet.getString("voornaam"));
+        klant.setPostcode(resultSet.getString("postcode"));
+        klant.setAuthtoken(resultSet.getString("authtoken"));
+        klant.setPassword(resultSet.getString("password"));
+        return klant;
     }
 
 }
