@@ -1,21 +1,16 @@
 package nl.ing.crowdfunding.dao;
 
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
-import nl.ing.crowdfunding.domain.Investering;
 import nl.ing.crowdfunding.domain.Klant;
-import nl.ing.crowdfunding.domain.Project;
-import nl.ing.crowdfunding.domain.ProjectStatus;
 import nl.ing.crowdfunding.util.ConnectionUtils;
 
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import com.mysql.jdbc.PreparedStatement;
 
 @Repository
 public class KlantRepository {
