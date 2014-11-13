@@ -27,8 +27,8 @@ angular
                 controller: 'ProjectenCtrl'
             })
             .when('/geldlenen', {
-                templateUrl: 'views/geldlenen_stap1.html',
-                controller: 'GeldLenen_stap1_Ctrl'
+                templateUrl: 'views/geldlenen.html',
+                controller: 'GeldLenenCtrl'
             })
             .when('/geldinvesteren', {
                 templateUrl: 'views/geldinvesteren.html',
