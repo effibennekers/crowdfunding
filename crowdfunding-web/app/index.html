@@ -1,87 +1,88 @@
 <!doctype html>
 <html class="no-js">
 <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
-    <link rel="stylesheet" href="styles/main.css">
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body ng-app="CrowdFundingApp">
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-    your browser</a> to improve your experience.</p>
+  your browser</a> to improve your experience.</p>
 <![endif]-->
 
 <!-- Add your site or application content here -->
 <div class="container">
-    <div class="header">
-        <ul class="nav nav-pills" ng-controller="menuController">
-            <div>
-                <img src="images/aap.jpg" height="40px;" width="40px;">
+  <div class="header">
+    <ul class="nav nav-pills" ng-controller="menuController">
+      <div>
+        <img src="images/aap.jpg" height="40px;" width="40px;">
 
-                <h3>Crowd Funding API</h3>
-            </div>
-            <li ng-class="{active: activeNav == 'home'}"><a href="#">Home</a></li>
-            <li ng-class="{active: activeNav == 'geldlenen'}"><a href="#/geldlenen">Geld lenen</a></li>
-            <li ng-class="{active: activeNav == 'geldinvesteren'}"><a href="#/geldinvesteren">Geld investeren</a></li>
-            <li class="Mijn geld">
-                <a class="dropdown-toggle" data-toggle="dropdown">
-                    Mijn geld <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li ng-class="{active: activeNav == 'profiel'}"><a href="#/profiel">Profiel</a></li>
-                    <li><a href="#">Mijn projecten</a></li>
-                </ul>
-            </li>
-
+        <h3>Crowd Funding API</h3>
+      </div>
+      <li ng-class="{active: activeNav == 'home'}"><a href="#">Home</a></li>
+      <li ng-class="{active: activeNav == 'geldlenen'}"><a href="#/geldlenen">Geld lenen</a></li>
+      <li ng-class="{active: activeNav == 'geldinvesteren'}"><a href="#/geldinvesteren">Geld investeren</a></li>
+      <li class="Mijn geld">
+        <a class="dropdown-toggle" data-toggle="dropdown">
+          Mijn geld <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li ng-class="{active: activeNav == 'profiel'}"><a href="#/profiel">Profiel</a></li>
+          <li><a href="#">Mijn projecten</a></li>
         </ul>
-    </div>
+      </li>
+      <li ng-class="{active: activeNav == 'vragen'}"><a href="#/vragen">Vragen</a></li>
 
-    <div ng-view=""></div>
+    </ul>
+  </div>
 
-    <div class="footer">
-        <footer></footer>
-    </div>
+  <div ng-view=""></div>
+
+  <div class="footer">
+    <footer></footer>
+  </div>
 </div>
 
 
 <script type="text/ng-template" id="myModalContent.html">
-    <div class="modal-header">
-        <h3 class="modal-title">I'm a modal!</h3>
-    </div>
-    <div class="modal-body">
-        <ul>
-            <li ng-repeat="item in items">
-                <a ng-click="selected.item = item">{{ item }}</a>
-            </li>
-        </ul>
-        Selected: <b>{{ selected.item }}</b>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-    </div>
+  <div class="modal-header">
+    <h3 class="modal-title">I'm a modal!</h3>
+  </div>
+  <div class="modal-body">
+    <ul>
+      <li ng-repeat="item in items">
+        <a ng-click="selected.item = item">{{ item }}</a>
+      </li>
+    </ul>
+    Selected: <b>{{ selected.item }}</b>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>
 </script>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 <script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', 'UA-XXXXX-X');
-    ga('send', 'pageview');
+  ga('create', 'UA-XXXXX-X');
+  ga('send', 'pageview');
 </script>
 
 <!--[if lt IE 9]>
@@ -105,6 +106,7 @@
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/profiel.js"></script>
+<script src="scripts/controllers/vragen.js"></script>
 <script src="scripts/controllers/projecten.js"></script>
 <script src="scripts/controllers/geldlenen_controller.js"></script>
 <script src="scripts/controllers/geldinvesteren/geldinvesteren.js"></script>
