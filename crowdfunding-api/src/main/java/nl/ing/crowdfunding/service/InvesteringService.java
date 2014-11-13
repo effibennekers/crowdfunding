@@ -15,7 +15,7 @@ public class InvesteringService {
 	private InvesteringRepository investeringRepository = new InvesteringRepository();
 
     public List<Investering> getAll() {
-        return null;
+    	return investeringRepository.getAll();
     }
 
 	public Investering getById(String id) {

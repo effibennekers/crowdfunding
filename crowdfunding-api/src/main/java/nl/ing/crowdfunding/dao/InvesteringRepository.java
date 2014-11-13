@@ -3,6 +3,8 @@ package nl.ing.crowdfunding.dao;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import nl.ing.crowdfunding.domain.Afbetaling;
 import nl.ing.crowdfunding.domain.Investering;
@@ -18,18 +20,45 @@ import com.mysql.jdbc.PreparedStatement;
 @Repository
 public class InvesteringRepository {
 
+	public List<Investering> getAll() {
+		List<Investering> investeringtList = new ArrayList<Investering>();
+		try {
+			Connection connection = ConnectionUtils.getConnection();
+
+			PreparedStatement preparedStatement = (PreparedStatement) connection
+					.prepareStatement("select * from crowdfunding.investering;");
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				Investering investering = new Investering();
+				investering.setId(resultSet.getInt("investeringid"));
+				investering.setInvesteerder(resultSet.getInt("investeerder"));
+				investering.setBedrag(resultSet.getBigDecimal("bedrag"));
+				investering.setProject(resultSet.getInt("project"));
+				investering.setBeloning(resultSet.getString("beloning"));
+				investering.setRentepercentage(resultSet.getBigDecimal("rentepercentage"));
+				investering.setStatus(InvesteringsStatus.fromValue(resultSet.getString("status")));
+				investering.setAfbetaalperiode(resultSet.getInt("afbetaalperiode"));
+				investeringtList.add(investering);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return investeringtList;
+	}
+	
     public Investering find(String id) {
     	Investering investering = new Investering();
 		try {
 			Connection connection = ConnectionUtils.getConnection();
 
 			PreparedStatement preparedStatement = (PreparedStatement) connection
-					.prepareStatement("select * from crowdfunding.investering where id= ? ; ");
+					.prepareStatement("select * from crowdfunding.investering where investeringid= ? ; ");
 			preparedStatement.setString(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-                investering.setId(resultSet.getInt("id"));
+                investering.setId(resultSet.getInt("investeringid"));
 				investering.setInvesteerder(resultSet.getInt("investeerder"));
 				investering.setBedrag(resultSet.getBigDecimal("bedrag"));
 				investering.setProject(resultSet.getInt("project"));
@@ -75,7 +104,7 @@ public class InvesteringRepository {
 				buff.append(", rentepercentage=?");
 				buff.append(", status=?");
 				buff.append(", afbetaalperiode=?");
-				buff.append("WHERE id=?");
+				buff.append("WHERE investeringid=?");
 				
 				PreparedStatement preparedStatement = (PreparedStatement) connection
                         .prepareStatement(buff.toString());
