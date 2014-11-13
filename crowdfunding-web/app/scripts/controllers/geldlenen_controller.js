@@ -8,6 +8,10 @@ angular.module('CrowdFundingApp')
         state.active('geldlenen');
         $scope.fee = { calculate: 0};
         $scope.fee = { rente: 0 };
+        $scope.doel = { doellening: ""};
+        $scope.doel = { redenlening: ""};
+        var klantid ;
+
         $scope.stap1 = true;
         $scope.stap2 = false;
         $scope.stap3 = false;
@@ -111,13 +115,39 @@ angular.module('CrowdFundingApp')
             $scope.stap3 = true;
         };
 
-        $scope.geldlenen_stap4 = function () {
+        $scope.submitFormLenen = function () {
+
+            var doelbedrag = $scope.fee.krediet;
+            var opentijd = $scope.fee.looptijd;
+            var rentepercentage = $scope.fee.rente;
+            var aangemeld = new Date();
+            var status = "bouw";
+            var titel = $scope.doel.doellening;
+            var beschrijving = $scope.doel.redenlening;
+
+            // klantid ophalen
+            var email = $scope.login.email;
+            var password = $scope.login.password;
+
+            $http.get('http://localhost:8080/rest/klanten/login?email=' + email + '&password=' + password).success(function(data){
+
+                klantid = data.klantid;
+
+
+            }).error(function () {
+
+            });
+
+            console.log(titel, aangemeld, beschrijving,doelbedrag, opentijd,rentepercentage, data.klantid, status);
+            $http.put('http://localhost:8080/rest/projecten', {'titel': titel, 'aangemeld': aangemeld, 'beschrijving': beschrijving, 'doelbedrag': doelbedrag, 'opentijd': opentijd, 'rentepercentage': rentepercentage, 'eigenaar': klantid, 'status': status});
+            $scope.subscribe(true);
+
             $scope.stap1 = false;
             $scope.stap2 = false;
             $scope.stap3 = false;
             $scope.stap4 = true;
-        };
-    })
+        }
+   })
 
     .value('state', {});
 

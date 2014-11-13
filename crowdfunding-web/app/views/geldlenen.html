@@ -225,6 +225,24 @@
                     <input type="number" min="0" max="60" step="6" id="inputRente" name="rente" ng-model="fee.rente"/>
                 </div>
             </div>
+            <div class="form-group">
+                <label for="select" class="col-lg-3">Doel van de lening</label>
+                <div class="col-lg-9">
+                    <select class="form-control" id="select" ng-model="doel.doellening">
+                        <option>Herfinanciering/Financiele verplichting</option>
+                        <option>Woning</option>
+                        <option>Vervoer</option>
+                        <option>Studie</option>
+                        <option>Duurzame energie</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="textArea" class="col-lg-3">Waarvoor heeft u de lening nodig?</label>
+                <div class="col-lg-9">
+                    <textarea class="form-control" rows="3" id="textArea" ng-model="doel.redenlening"></textarea>
+                </div>
+            </div>
             <!--
                 Behadelingskosten
             -->
@@ -351,7 +369,7 @@ Let op: de eenmalige succes fee wordt in mindering gebracht op het uit te keren 
             <div class="form-group">
                 <div class="col-lg-9 col-lg-offset-3">
                     <button type="submit" class="btn btn-primary" ng-click="geldlenen_stap2()">Vorige</button>
-                    <button type="submit" class="btn btn-primary" ng-click="geldlenen_stap4()">Volgende</button>
+                    <button type="submit" class="btn btn-primary" ng-click="submitFormLenen()">Volgende</button>
                 </div>
             </div>
         </fieldset>
