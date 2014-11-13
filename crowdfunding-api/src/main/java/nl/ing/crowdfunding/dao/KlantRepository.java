@@ -1,17 +1,15 @@
 package nl.ing.crowdfunding.dao;
 
+import com.mysql.jdbc.PreparedStatement;
+import nl.ing.crowdfunding.domain.Klant;
+import nl.ing.crowdfunding.util.ConnectionUtils;
+import org.springframework.stereotype.Repository;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import nl.ing.crowdfunding.domain.Klant;
-import nl.ing.crowdfunding.util.ConnectionUtils;
-
-import org.springframework.stereotype.Repository;
-
-import com.mysql.jdbc.PreparedStatement;
 
 @Repository
 public class KlantRepository {
@@ -19,7 +17,7 @@ public class KlantRepository {
     public static final String INSERT = "insert into  crowdfunding.klant values (default, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public List<Klant> getAll() {
-    	List<Klant> klantLijst = new ArrayList<Klant>();
+        List<Klant> klantLijst = new ArrayList<Klant>();
         try {
             Connection connection = ConnectionUtils.getConnection();
 
@@ -28,7 +26,7 @@ public class KlantRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-            	Klant klant = resultSetToKlant(resultSet);
+                Klant klant = resultSetToKlant(resultSet);
                 klantLijst.add(klant);
             }
         } catch (Exception e) {

@@ -5,12 +5,15 @@ package nl.ing.crowdfunding.domain;
  */
 public enum InvesteringsStatus {
     toegezegd, betaald;
-    
+
     public static InvesteringsStatus fromValue(String strStatus) {
-    	switch (strStatus) {
-    	case "toegezegd": return toegezegd;
-    	case "betaald": return betaald;
-    	default: return toegezegd;
-    	}
+        switch (strStatus) {
+            case "toegezegd":
+                return toegezegd;
+            case "betaald":
+                return betaald;
+            default:
+                return toegezegd;
+        }
     }
 }

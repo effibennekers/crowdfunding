@@ -6,14 +6,10 @@ import nl.ing.crowdfunding.dao.ProjectRepository;
 import nl.ing.crowdfunding.domain.Investering;
 import nl.ing.crowdfunding.domain.Klant;
 import nl.ing.crowdfunding.domain.Project;
-
-import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -67,7 +63,6 @@ public class ProjectService {
         }
         project.setBereiktBedrag(bereiktBedrag.toString());
     }
-
 
     private void enrichNaam(Project project) {
         Klant klant = klantRepository.find(String.valueOf(project.getEigenaar()));
