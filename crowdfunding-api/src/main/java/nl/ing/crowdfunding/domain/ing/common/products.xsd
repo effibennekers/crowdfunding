@@ -1,0 +1,852 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema version="1.0" targetNamespace="http://commonapi.icec.oib.ing.com/product" xmlns:products="http://commonapi.icec.oib.ing.com/product" xmlns:cores="http://commonapi.icec.oib.ing.com/core" xmlns:persons="http://commonapi.icec.oib.ing.com/person" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://commonapi.icec.oib.ing.com/core" schemaLocation="cores.xsd"/>
+  <xs:import namespace="http://commonapi.icec.oib.ing.com/person" schemaLocation="persons.xsd"/>
+  <xs:element name="product" type="products:product"/>
+  <xs:element name="productDescriptor" type="products:productDescriptor"/>
+  <xs:element name="productDescriptorList" type="products:productDescriptorList"/>
+  <xs:element name="productReference" type="products:productReference"/>
+  <xs:element name="productReferenceList" type="products:productReferenceList"/>
+  <xs:element name="transaction" type="products:transaction"/>
+  <xs:element name="transactionList" type="products:transactionList"/>
+  <xs:element name="transactionReference" type="products:transactionReference"/>
+  <xs:element name="transfer" type="products:transfer"/>
+  <xs:element name="transferList" type="products:transferList"/>
+  <xs:element name="transferReference" type="products:transferReference"/>
+  <xs:element name="transferRequest" type="products:transferRequest"/>
+  <xs:complexType name="product">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[A generic Product, that will be detailed in the different sub-type as Account, etc.<p>
+Account extends the Product.]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cores:baseObjectWithID">
+        <xs:sequence>
+          <xs:element name="flagExternal" type="xs:boolean" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The flag indicating if the product is internal (managed inside ING Group) or external (referring to an other bank).<p>
+It enable to distinguish among products that can be used to initiate a transfer and those that can not be used because they are not managed by any ING Group Bank.<p>
+If set to <b>True</b> it means that the product is not managed inside ING Group.<p>
+The default value should be <b>False</b>.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="type" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the type of the product.<p>
+It enable to distinguish among different product types as Accounts, Insurances, etc.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="subType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the sub type of the product.<p>
+It enable to distinguish among different sub type of a product, as for account types as French CA, LEO, TA, etc.<p>
+If the sub type is not needed, it is still mandatory bat the value would be "NULL"-"Not applicable".<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="productIdentification" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the identification data of the product.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="customerDescription" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the description of the product as defined by the customers.<p>
+In Spanish implementation this field is named "alias".<p>
+It can be seen as the "nickname" of the product as desired by the customer.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="bankId" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The id of the bank.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="referringAddress" type="cores:address" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The Address object containing the address to which the product refers.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="currency" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the currency of reference of all the values.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="owners" type="persons:personReferenceList" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The PersonReferenceList object containing the list of references to the owners of the account.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="productDescriptor">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Product Features: a description of the features of the product.<p>
+A list of possible features listed in the featureList structure is:
+<li>DebitableProduct</li>
+<li>CreditableProduct</li>
+<li>ClosableProduct</li>
+<li>ProductWithTransactions</li>
+<li>...</li>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cores:baseObjectWithID">
+        <xs:sequence>
+          <xs:element name="type" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the type of the product the features refer to.<p>
+It enable to distinguish among different product types as Accounts, Insurances, etc.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="subType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the sub type of the product the features refer to.<p>
+It enable to distinguish among different sub type of a product, as for account types as French CA, LEO, TA, etc.<p>
+If the sub type is not needed, it is still mandatory bat the value would be "NULL"-"Not applicable".<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="description" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the description of the product.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="featureList" type="cores:valuePairList" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The ValuePairList object containing the properties of the Product as a set of pairs Name-Value .<p>
+This dynamic attribute is for flexibility purpose.<p>
+BUT all the countries and developers have to keep always in mind that such list MUST ONLY be used to DISPLAY and there MUST BE NO BUSINESS/PRESENTATION logic associated with such list values (there must be no reference to any key/value within the Presentation Code).]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="productDescriptorList">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[List of ProductDescriptors]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="list" type="products:productDescriptor" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A list of ProductDescriptors.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="productReference">
+    <xs:complexContent>
+      <xs:extension base="cores:referenceObjectID">
+        <xs:sequence>
+          <xs:element name="type" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the type of the product.<br>
+It enable to distinguish among different product types as Accounts, Insurances, etc.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="subType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the sub type of the product.<br>
+It enable to distinguish among different sub type of a product, as for account types as French CA, LEO, TA, etc.<br>
+If the sub type is not needed, it is still mandatory bat the value would be "NULL"-"Not applicable".<br>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="productIdentification" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the identification data of the product.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="bankId" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The id of the bank.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="roleType" type="cores:enumeratedValue" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The role that the requesting person has in this Product.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="customerDescription" type="xs:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the description of the product as defined by the customers.<br>
+In Spanish implementation this field is named "alias".]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="currency" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the currency of reference of all the values.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="availableBalance" type="cores:moneyValue" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The MoneyValue object containing the current available balance of
+the account.
+<br>
+If the product is not an Account this attribute will not be populated.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="iban" type="xs:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the International Bank Account
+Number of the account. We must check if this attribute is universal, or
+if there are countries where it's meaningless.
+<br>
+If the product is not an Account this attribute will not be populated.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="productReferenceList">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[List of ProductReference]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="list" type="products:productReference" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A list of ProductReference.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transaction">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[A generic transaction of money referred to a Product.
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cores:baseObjectWithID">
+        <xs:sequence>
+          <xs:element name="productId" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The reference to the
+Product to which the Transaction belongs.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="productIdentification" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the identification data of the product.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="transactionType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the type of the Transaction.
+<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="transactionSubType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the sub type of the Transaction.
+<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="direction" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object indicating the direction of the
+Transaction.
+<p>
+Can be for example Income or Transfer.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="counterpartProductId" type="xs:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The reference to the
+counterpart Product to which the Transaction refers.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="counterpartProductIdentification" type="xs:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the identification data of the product.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="description" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the description of the transaction.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="currency" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the currency of reference of
+all the values.
+To be checked if really needed or not.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="amount" type="cores:moneyValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The MoneyValue object containing the amount of the transaction.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="commission" type="cores:moneyValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The MoneyValue object containing the amount due as commission to the bank for the transaction.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="effectiveDate" type="cores:ISO8601DateTime" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The ISO8601DateTime representing the effective date of the
+transaction.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="accountingDate" type="cores:ISO8601DateTime" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The ISO8601DateTime representing the Accounting date of the
+transaction.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="transferId" type="xs:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The ID of the
+Transfer generating this Transaction.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="transactionList">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[List of Transaction]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="list" type="products:transaction" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A list of Transaction.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transactionReference">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[A generic transaction of money referred to a Product.
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cores:referenceObjectID">
+        <xs:sequence>
+          <xs:element name="transactionType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the type of the Transaction.
+<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="transactionSubType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the sub type of the Transaction.
+<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="direction" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object indicating the direction of the
+Transaction.
+<p>
+Can be for example Income or Transfer.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="description" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the description of the transaction.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="amount" type="cores:moneyValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The MoneyValue object containing the amount of the transaction.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="transfer">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[A generic transfer of money from an ING Product to an other product (ING or not) generating a following Transaction.
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cores:baseObjectWithID">
+        <xs:sequence>
+          <xs:element name="sourceProductId" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The reference to the
+Product from which the the Transfer originate.<p>
+From this object will be obtained the BIC and the IBAN to be used
+to populate the DbtrAgt and the DbtrAcct in the SEPA Transaction XML element.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="sourceProductIdentification" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the identification data of the product.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="targetProductId" type="xs:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The reference to the
+Product to which the the Transfer will send money.<p>
+It can be null since it can be used only in case the Transfer ends
+to a Product (or account) that belongs to the same person who owns
+the source Product.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="targetProductIdentification" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the identification data of the product.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="targetCodeType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the type of the unique code
+that identifies the Product to which the the Transfer will send money.<p>
+This field is needed in order to understand which code is stored in the
+targetCode field because countries out of the IBAN area are not
+using the same IBAN code itself.
+<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="targetCode" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String containing the IBAN or any other unique code
+that identifies the Product to which the Transfer will send money.<p>
+In case of a SEPA transaction this field contains the IBAN to be used
+to populate the CdtrAcct in the SEPA Transaction XML element.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="targetBICCode" type="xs:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String containing the IBAN or any other unique code
+that identifies the Product to which the Transfer will send money.<p>
+This field contains the BIC to be used
+to populate the CdtrAgt in the SEPA Transaction XML element.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="targetCustomerName" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String containing the name of the Customer to whom the Transfer
+will send money.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="amount" type="cores:moneyValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The MoneyValue object containing the amount of the transfer.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="commission" type="cores:moneyValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The MoneyValue object containing the amount due as commission to the bank for the transfer.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="executionDate" type="cores:ISO8601DateTime" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The ISO8601DateTime representing the date of the
+transfer to be executed.<p>
+Could be from now (to be executed immediatly) or in the future.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="transferType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the type of the Transfer.
+<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="description" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the description of the transfer.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="paymentReference" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the payment reference of the transfer.<p>
+Field inherited from ING NL Mobile API object <b>com.ing.mobile.model.PaymentOrder</b>.<p>
+Can be mapped into the SEPA Transaction Block "Mandate Identification" field.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="links" type="cores:HALink" minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[An array of HALink objects containing the links to other resources correlated to this entity,
+or actions that can be performed on it, as for example the steps for the authorization of a payment.<p>
+TODO: could be more clean to have two different arrays, one for the relations and one for the actions?]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="status" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the current status of the transfer.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="signatureId" type="xs:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the signature id of the transfer.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="transactionRef" type="products:transactionReference" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The TransactionReference object containing the reference to the
+Transaction generated from this Transfer.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="transferList">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[List of Transfer]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="list" type="products:transfer" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A list of Transfer.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transferReference">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[A generic transfer of money from an ING Product to an other product (ING or not) generating a following Transaction.
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cores:referenceObjectID">
+        <xs:sequence>
+          <xs:element name="targetCodeType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the type of the unique code
+that identifies the Product to which the the Transfer will send money.<p>
+This field is needed in order to understand which code is stored in the
+targetCode field because countries out of the IBAN area are not
+using the same IBAN code itself.
+<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="targetCode" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String containing the IBAN or any other unique code
+that identifies the Product to which the Transfer will send money.<p>
+In case of a SEPA transaction this field contains the IBAN to be used
+to populate the CdtrAcct in the SEPA Transaction XML element.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="targetBICCode" type="xs:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String containing the IBAN or any other unique code
+that identifies the Product to which the Transfer will send money.<p>
+This field contains the BIC to be used
+to populate the CdtrAgt in the SEPA Transaction XML element.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="amount" type="cores:moneyValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The MoneyValue object containing the amount of the transfer.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="transferType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the type of the Transfer.
+<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="description" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The String object containing the description of the transfer.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="status" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The EnumeratedValue object containing the current status of the transfer.<p>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="transferRequest">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[A request transfer of money from an ING Product to an other product (ING or not) to be passed as request to an entrypoint.
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="sourceProductId" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The reference to the
+Product from which the the Transfer originate.<p>
+From this object will be obtained the BIC and the IBAN to be used
+to populate the DbtrAgt and the DbtrAcct in the SEPA Transaction XML element.<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceProductIdentification" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String object containing the identification data of the product.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="targetProductId" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The reference to the
+Product to which the the Transfer will send money.<p>
+It can be null since it can be used only in case the Transfer ends
+to a Product (or account) that belongs to the same person who owns
+the source Product.<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="targetProductIdentification" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String object containing the identification data of the product.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="targetCodeType" type="cores:enumeratedValue" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The EnumeratedValue object containing the type of the unique code
+that identifies the Product to which the the Transfer will send money.<p>
+This field is needed in order to understand which code is stored in the
+targetCode field because countries out of the IBAN area are not
+using the same IBAN code itself.
+<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="targetCode" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String containing the IBAN or any other unique code
+that identifies the Product to which the Transfer will send money.<p>
+In case of a SEPA transaction this field contains the IBAN to be used
+to populate the CdtrAcct in the SEPA Transaction XML element.<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="targetBICCode" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String containing the IBAN or any other unique code
+that identifies the Product to which the Transfer will send money.<p>
+This field contains the BIC to be used
+to populate the CdtrAgt in the SEPA Transaction XML element.<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="targetCustomerName" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String containing the name of the Customer to whom the Transfer
+will send money.<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="amount" type="cores:moneyValue" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The MoneyValue object containing the amount of the transfer.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="commission" type="cores:moneyValue" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The MoneyValue object containing the amount due as commission to the bank for the transfer.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="executionDate" type="cores:ISO8601DateTime" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The ISO8601DateTime representing the date of the
+transfer to be executed.<p>
+Could be from now (to be executed immediatly) or in the future.<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transferType" type="cores:enumeratedValue" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The EnumeratedValue object containing the type of the Transfer.
+<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="description" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String object containing the description of the transfer.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="paymentReference" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String object containing the payment reference of the transfer.<p>
+Field inherited from ING NL Mobile API object <b>com.ing.mobile.model.PaymentOrder</b>.<p>
+Can be mapped into the SEPA Transaction Block "Mandate Identification" field.<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

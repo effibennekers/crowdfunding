@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema version="1.0" targetNamespace="http://commonapi.icec.oib.ing.com/core" xmlns:cores="http://commonapi.icec.oib.ing.com/core" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="address" type="cores:address"/>
+  <xs:element name="addressList" type="cores:addressList"/>
+  <xs:element name="baseObjectWithID" type="cores:baseObjectWithID"/>
+  <xs:element name="emailAddress" type="cores:emailAddress"/>
+  <xs:element name="emailAddressList" type="cores:emailAddressList"/>
+  <xs:element name="enumeratedValue" type="cores:enumeratedValue"/>
+  <xs:element name="enumeratedValueList" type="cores:enumeratedValueList"/>
+  <xs:element name="extendedTypedValue" type="cores:extendedTypedValue"/>
+  <xs:element name="extendedTypedValueList" type="cores:extendedTypedValueList"/>
+  <xs:element name="HALink" type="cores:HALink"/>
+  <xs:element name="ISO8601DateTime" type="cores:ISO8601DateTime"/>
+  <xs:element name="moneyValue" type="cores:moneyValue"/>
+  <xs:element name="phoneNumber" type="cores:phoneNumber"/>
+  <xs:element name="phoneNumberList" type="cores:phoneNumberList"/>
+  <xs:element name="referenceObjectID" type="cores:referenceObjectID"/>
+  <xs:element name="valuePair" type="cores:valuePair"/>
+  <xs:element name="valuePairList" type="cores:valuePairList"/>
+  <xs:complexType name="address">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Destructured full address, reduced to just one string with all the information concatenated plus a type identifying the kind of address is it, like "personal", "home", "office".]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cores:baseObjectWithID">
+        <xs:sequence>
+          <xs:element name="bankId" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The id of the bank by whom the address is managed.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="addressType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The type of this address, as Home, Work, Holidays, etc.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="preferred" type="xs:boolean" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[If true indicate that this is the preferred address to be used to contact the person/company.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="street" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[All the simple address attribute concatenated in a single String.
+Max 250 chars.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="addressList">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[List of addresses]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="list" type="cores:address" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A list of addresses.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="baseObjectWithID">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Structure to manage the identification of an Object, in order to standardize the way to implement this id among the different Objects.
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="id" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String representing the unique ID that identify the object.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="createDate" type="cores:ISO8601DateTime" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The ISO8601DateTime representing the instant when the object was created.
+It can correspond to the opening date of an Account.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="emailAddress">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[An eMail Address (not used the term "account" in order to not generate risk of misunderstanding).
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cores:baseObjectWithID">
+        <xs:sequence>
+          <xs:element name="bankId" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The id of the bank by whom the email address is managed.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="emailAddressType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The type of this email address, as Work, Personal, Company, etc.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="preferred" type="xs:boolean" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[If true indicate that this is the preferred email address to be used to contact the person/company.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="emailAddress" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The email address.
+<p>
+Max 254 chars.<p>
+<a href=http://www.rfc-editor.org/errata_search.php?rfc=3696&eid=1690http://www.rfc-editor.org/errata_search.php?rfc=3696&eid=1690">RFC3696 Correction</a>]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="emailAddressList">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[List of EmailAddresses]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="list" type="cores:emailAddress" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A list of EmailAddress.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="enumeratedValue">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Pair of CODE-DESCRIPTION, used to standardize coding of values.]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="code" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String code representing the value of the attribute.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="label" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String representing the description of the value that the attribute has.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="enumeratedValueList">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[List of EnumeratedValue]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="lang" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The language (if meaningful) of the text reported in the list.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="list" type="cores:enumeratedValue" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A list of generic EnumeratedValues.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="extendedTypedValue">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Structure of NAME-DATATYPE-VALUE, used to manage attributes in unstructured objects.
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String representing the name of that typed attribute.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dataType" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String code representing the type of the attribute.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="value" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String representing the value that the typed attribute has.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="extendedTypedValueList">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[List of ExtendedTypedValue]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="lang" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The language (if meaningful) of the text reported in the list.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="list" type="cores:extendedTypedValue" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A list of generic ExtendedTypedValue.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HALink">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[The basic structure to create links for the HATEOAS ReST model in HAL way, with some more extensions to the basic model.
+<p>
+For a full documentation of the JSON-HAL model see : <a href="http://tools.ietf.org/html/draft-kelly-json-hal-06" target="_blank">RFC JSON Hypertext Application Language</a>
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="rel" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The relation mapped via this HALink.
+<p>
+This attribute is not defined in the JSON-HAL standard specification.<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="href" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The URI of the targeted resource.
+<p>
+Its value is either a URI [RFC3986] or a URI Template [RFC6570].<p>
+If the value is a URI Template then the Link Object SHOULD have a
+"templated" attribute whose value is true.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="method" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[NEW - V1.0.1<br>
+The METHOD accepted by the targeted resource.<br>
+If multiple methods are accepted then the attribute contains a list separated by comma ",".
+<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="templated" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[If the relation is templated <p>
+Its value is boolean and SHOULD be true when the Link Object's "href"
+property is a URI Template.
+Its value SHOULD be considered false if it is undefined or any other
+value than true.
+<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="type" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Its value is a string used as a hint to indicate the media type
+expected when dereferencing the target resource.
+<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deprecation" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Its presence indicates that the link is to be deprecated (i.e.
+removed) at a future date. Its value is a URL that SHOULD provide
+further information about the deprecation.<p>
+A client SHOULD provide some notification (for example, by logging a
+warning message) whenever it traverses over a link that has this
+property. The notification SHOULD include the deprecation property's
+value so that a client manitainer can easily find information about
+the deprecation.<p>
+<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="name" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Its value MAY be used as a secondary key for selecting HALink Objects
+which share the same relation type.
+<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="profile" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[Its value is a string which is a URI that hints about the profile of the target resource.
+<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="title" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The label of the object targeted by the relation as it should be shown.
+<p>
+Its value is a string and is intended for labeling the link with a
+human-readable identifier.<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="hreflang" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[This value is a string and is intended for indicating the language of
+the target resource.<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ISO8601DateTime">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[A Date and Time attribute in the ISO 8601 format.<p>
+This class is used to standardize the Date and Time management in the system. <p>
+The format will be the one defined by the ISO 8601, as example:<p>
+2013-11-11T21:29:08.000+00:00<p>
+Reference can be found at : http://en.wikipedia.org/wiki/ISO_8601 <a href="http://en.wikipedia.org/wiki/ISO_8601"> ISO 8610 </a>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="datetime" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The Date and Time value in the ISO 8601 format.<p>
+The Java SimpleDateFormat format is :<p>
+yyyy-MM-dd'T'HH:mm:ss.SSSXXX]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="moneyValue">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[A money value, composed by the value itself and the currency.
+<p>
+Using BigDecimal for the value as suggested in:
+<a href="http://www.javapractices.com/topic/TopicAction.do?Id=13">Java Practices</a>
+<p>
+Should study how to manage even the exchange ratio with the reference currency ( Euro )
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="value" type="xs:decimal" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The value.
+<p>]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="currency" type="cores:enumeratedValue" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The EnumeratedValue object containing the currency of reference of the value.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="phoneNumber">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[A Phone Number.
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="cores:baseObjectWithID">
+        <xs:sequence>
+          <xs:element name="bankId" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The id of the bank by whom the phone number is managed.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="phoneNumberType" type="cores:enumeratedValue" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The type of this phone number, as Mobile, Home, etc.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="preferred" type="xs:boolean" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[If true indicate that this is the preferred phone number to be used to contact the person/company.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="number" type="xs:string" minOccurs="1">
+            <xs:annotation>
+              <xs:documentation>
+                <![CDATA[The phone number.
+<p>
+The phone number has been decided to be just one string with out a structure.
+<p>
+The number is not decomposed in all it's components but it is
+stored all in this field. Max 20 chars.]]>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="phoneNumberList">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[List of PhoneNumber]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="list" type="cores:phoneNumber" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A list of PhoneNumber.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="referenceObjectID">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Structure to manage the references from one Object to an other, in order to standardize the way to implement this link.
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="id" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String representing the unique ID that identify the referenced object.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="href" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String of the relative URL to access the referenced object.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="referenceCreateDate" type="cores:ISO8601DateTime" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The ISO8601DateTime representing the instant when the reference to the object was created.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="valuePair">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[Pair of NAME-VALUE, used to store values of an attribute that is not full structured in an entity.
+<p>]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="cores:enumeratedValue" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The EnumeratedValue representing the name of that specific attribute.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="value" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The String representing the value of that attribute.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="valuePairList">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[List of ValuePair]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="lang" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[The language (if meaningful) of the text reported in the list.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="list" type="cores:valuePair" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <![CDATA[A list of generic ValuePair.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
